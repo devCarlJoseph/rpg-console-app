@@ -1,4 +1,4 @@
-namespace ConsoleRPG
+namespace ConsoleRPG.Interfaces
 {
     public interface IEntity
     {

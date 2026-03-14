@@ -1,0 +1,40 @@
+[
+  {
+    "Id": "q_001",
+    "Name": "The Slime Menace",
+    "Description": "The village outskirts are overrun with slimes. Defeat 5 of them to ensure the safety of the farmers.",
+    "Type": "Main",
+    "LevelRequirement": 1,
+    "Objectives": [
+      {
+        "Type": "Kill",
+        "TargetEnemyId": "e_slime_01",
+        "RequiredCount": 5
+      }
+    ],
+    "Rewards": {
+      "XP": 50,
+      "Gold": 25,
+      "ItemIds": ["potion_001", "potion_001"]
+    }
+  },
+  {
+    "Id": "q_002",
+    "Name": "Gathering Herbs",
+    "Description": "The local healer needs medicinal herbs from the nearby forest.",
+    "Type": "Side",
+    "LevelRequirement": 1,
+    "Objectives": [
+      {
+        "Type": "Gather",
+        "TargetItemId": "mat_herb_01",
+        "RequiredCount": 10
+      }
+    ],
+    "Rewards": {
+      "XP": 30,
+      "Gold": 15,
+      "ItemIds": []
+    }
+  }
+]

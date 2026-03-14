@@ -1,0 +1,66 @@
+[
+  {
+    "Id": "e_slime_01",
+    "Name": "Green Slime",
+    "Type": "Normal",
+    "Level": 1,
+    "Stats": {
+      "MaxHP": 20,
+      "Strength": 5,
+      "Defense": 2
+    },
+    "ExpectedLoot": {
+      "XP": 10,
+      "Gold": 5,
+      "DropTable": [
+        {
+          "Percentage": 10.0,
+          "ItemId": "potion_001"
+        }
+      ]
+    }
+  },
+  {
+    "Id": "e_goblin_01",
+    "Name": "Weak Goblin",
+    "Type": "Normal",
+    "Level": 2,
+    "Stats": {
+      "MaxHP": 30,
+      "Strength": 10,
+      "Defense": 5
+    },
+    "ExpectedLoot": {
+      "XP": 25,
+      "Gold": 12,
+      "DropTable": [
+        {
+          "Percentage": 5.0,
+          "ItemId": "weap_001"
+        }
+      ]
+    }
+  },
+  {
+    "Id": "e_boss_orc_01",
+    "Name": "Orc Warlord",
+    "Type": "Boss",
+    "Level": 5,
+    "Stats": {
+      "MaxHP": 500,
+      "Strength": 80,
+      "Defense": 70,
+      "SpecialAttackPower": 90
+    },
+    "ExpectedLoot": {
+      "XP": 500,
+      "Gold": 250,
+      "DropTable": [
+        {
+          "Percentage": 100.0,
+          "ItemId": "weap_boss_01"
+        }
+      ]
+    }
+  }
+]

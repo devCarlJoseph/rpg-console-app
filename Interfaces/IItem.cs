@@ -1,4 +1,6 @@
-namespace ConsoleRPG
+using ConsoleRPG.Model;
+
+namespace ConsoleRPG.Interfaces
 {
     public interface IItem
     {

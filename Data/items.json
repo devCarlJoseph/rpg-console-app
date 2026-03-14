@@ -1,0 +1,41 @@
+[
+  {
+    "Id": "potion_001",
+    "Name": "Minor Health Potion",
+    "Description": "Restores 50 HP. A basic potion favored by novice adventurers.",
+    "Type": "Consumable",
+    "Value": 10,
+    "Weight": 1,
+    "Rarity": "Common",
+    "LevelRequirement": 1,
+    "Effects": {
+      "HealAmount": 50
+    }
+  },
+  {
+    "Id": "weap_001",
+    "Name": "Rusty Iron Sword",
+    "Description": "An old, chipped sword that has seen better days.",
+    "Type": "Weapon",
+    "Value": 25,
+    "Weight": 5,
+    "Rarity": "Common",
+    "LevelRequirement": 1,
+    "Stats": {
+      "AttackBonus": 5
+    }
+  },
+  {
+    "Id": "arm_001",
+    "Name": "Leather Tunic",
+    "Description": "Basic protective clothing made of hardened leather.",
+    "Type": "Armor",
+    "Value": 30,
+    "Weight": 4,
+    "Rarity": "Common",
+    "LevelRequirement": 1,
+    "Stats": {
+      "DefenseBonus": 3
+    }
+  }
+]
