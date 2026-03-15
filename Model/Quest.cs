@@ -4,15 +4,15 @@ namespace ConsoleRPG.Model
     public abstract class Quest
     {
         // -- Basic Quest Inofrmation --
-        public string Id {get; private set;}
-        public string Title {get; private set;}
-        public string Description {get; private set;}
+        public string Id { get; private set; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
 
-        public bool IsCompleted {get; protected set;}
+        public bool IsCompleted { get; protected set; }
 
         // -- Rewards --
-        public int RewardXP {get; private set;}
-        public int RewardGold {get; private set;}
+        public int RewardXP { get; private set; }
+        public int RewardGold { get; private set; }
 
         protected Quest(string id, string title, string description, int xp, int gold)
         {
@@ -29,7 +29,7 @@ namespace ConsoleRPG.Model
         public virtual void Complete(Player player)
         {
             if (IsCompleted)
-            return;
+                return;
 
             IsCompleted = true;
 
@@ -44,15 +44,15 @@ namespace ConsoleRPG.Model
     //Example Quest Type: Kill Quest
     public class KillQuest : Quest
     {
-        public string TargetEnemyName {get; private set;}
-        public int RequiredKills {get; private set;}
-        public int CurrentKills {get; private set;}
+        public string TargetEnemyName { get; private set; }
+        public int RequiredKills { get; private set; }
+        public int CurrentKills { get; private set; }
 
         public KillQuest(string id, string title, string description, string targetEnemy, int RequiredKills, int xp, int gold)
         : base(id, title, description, xp, gold)
         {
             TargetEnemyName = targetEnemy;
-            RequiredKills = RequiredKills;
+            this.RequiredKills = RequiredKills;
             CurrentKills = 0;
         }
 
@@ -81,7 +81,7 @@ namespace ConsoleRPG.Model
         {
             if (CurrentKills >= RequiredKills)
             {
-                Complete(Player);
+                Complete(player);
             }
         }
     }

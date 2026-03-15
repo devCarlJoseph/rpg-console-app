@@ -1,41 +1,248 @@
-[
-  {
-    "Id": "potion_001",
-    "Name": "Minor Health Potion",
-    "Description": "Restores 50 HP. A basic potion favored by novice adventurers.",
-    "Type": "Consumable",
-    "Value": 10,
-    "Weight": 1,
-    "Rarity": "Common",
-    "LevelRequirement": 1,
-    "Effects": {
-      "HealAmount": 50
+{
+    "Items": {
+        "Weapons": [
+            {
+                "Id": "weap_001",
+                "Name": "Rusted Hunter Dragon",
+                "Description": "A worn dagger used by beginner hunters. Lightweight but reliable.",
+                "Value": 15,
+                "Weight": 2,
+                "Rarity": "Common",
+                "LevelRequirement": 1,
+                "Stats": {
+                    "AttackBonus": 6,
+                    "CritChance": 3
+                }
+            },
+            {
+                "Id": "weap_002",
+                "Name": "Steel Assassin Dagger",
+                "Description": "A worn dagger used by beginner hunters. Lightweight but reliable.",
+                "Value": 50,
+                "Weight": 3,
+                "Rarity": "Uncommon",
+                "LevelRequirement": 3,
+                "Stats": {
+                    "AttackBonus": 12,
+                    "CritChance": 5 
+                }
+            },
+            {
+                "Id": "weap_003",
+                "Name": "Knight Slayer Sword",
+                "Description": "A sturdy sword favored by knights to strike with precision.",
+                "Value": 120,
+                "Weight": 5,
+                "Rarity": "Rare",
+                "LevelRequirement": 5,
+                "Stats": {
+                    "AttackBonus": 18,
+                    "StrengthBonus": 5 
+                }
+            },
+            {
+                "Id": "weap_004",
+                "Name": "Demon Fang Blade",
+                "Description": "A cursed blade that can cause enemies to bleed.",
+                "Value": 250,
+                "Weight": 6,
+                "Rarity": "Epic",
+                "LevelRequirement": 8,
+                "Stats": {
+                    "AttackBonus": 25,
+                    "SpecialEffect": "Chance to Bleed" 
+                }
+            },
+            {
+                
+                "Id": "weap_005",
+                "Name": "Monarch Shadow Blade",
+                "Description": "A legendary sword imbued with shadow energy.",
+                "Value": 600,
+                "Weight": 7,
+                "Rarity": "Legendary",
+                "LevelRequirement": 12,
+                "Stats": {
+                    "AttackBonus": 40,
+                    "CritChance": 10
+                }
+            },
+            {
+                "Id": "weap_006",
+                "Name": "Shadow Fang",
+                "Description": "A blade forged from dark essence, dealing extra shadow damage.",
+                "Value": 400,
+                "Weight": 7,
+                "Rarity": "Epic",
+                "LevelRequirement": 10,
+                "Stats": {
+                    "AttackBonus": 32,
+                    "ShadowDamage": 5
+                }
+            },
+            {
+                "Id": "weap_007",
+                "Name": "Twin Fang Daggers",
+                "Description": "Dual daggers that allow rapid consecutive strikes.",
+                "Value": 180,
+                "Weight": 3,
+                "Rarity": "Rare",
+                "LevelRequirement": 6,
+                "Stats": {
+                    "AttackBonus": 20,
+                    "CritChance": 5,
+                    "Agility": 2
+                }
+            }
+        ],
+        "Armor": [
+            {
+                "Id": "arm_001",
+                "Name": "Beginner Hunter Armor",
+                "Description": "Simple leather armor for novice hunters. Provides basic protection.",
+                "Stats": {
+                    "HPBonus": 10,
+                    "DefenseBonus": 5
+                },
+                "LevelRequirement": 1,
+                "Rarity": "Common",
+                "Value": 30,
+                "Weight": 5
+            },
+            {
+                "Id": "arm_002",
+                "Name": "Steel Hunter Armor",
+                "Description": "Forged steel armor used by trained hunters.",
+                "Stats": {
+                    "HPBonus": 15,
+                    "DefenseBonus": 10,
+                    "StrengthBonus": 5
+                },
+                "LevelRequirement": 3,
+                "Rarity": "Uncommon",
+                "Value": 80,
+                "Weight": 7
+            },
+            {
+                "Id": "arm_003",
+                "Name": "Demon Knight Armor",
+                "Description": "Armor infused with dark magic, giving extra vitality.",
+                "Stats": {
+                    "HPBonus": 20,
+                    "DefenseBonus": 18
+                },
+                "LevelRequirement": 5,
+                "Rarity": "Uncommon",
+                "Value": 180,
+                "Weight": 9
+            },
+            {
+                "Id": "arm_004",
+                "Name": "Shadow Monarch Armor",
+                "Description": "Legendary armor that enhances agility and shadow resistance.",
+                "Stats": {
+                    "HPBonus": 25,
+                    "DefenseBonus": 30,
+                    "Agility": 10
+                },
+                "LevelRequirement": 10,
+                "Rarity": "Epic",
+                "Value": 400,
+                "Weight": 12
+            },
+            {
+                "Id": "arm_005",
+                "Name": "Night Stalker Robe",
+                "Description": "Lightweight robe enhancing mana regeneration for shadow hunters.",
+                "Stats": {
+                    "HPBonus": 10,
+                    "DefenseBonus": 12,
+                    "ManaBonus": 10
+                },
+                "LevelRequirement": 4,
+                "Rarity": "Rare",
+                "Value": 150,
+                "Weight": 6
+            }
+        ],
+        "Accessories": [
+            {
+                "Id": "acc_001",
+                "Name": "Hunter Ring",
+                "Stats": {
+                    "StrengthBonus": 3
+                },
+                "Rarity": "Uncommon",
+                "Value": 50
+            },
+            {
+                "Id": "acc_002",
+                "Name": "Assassin Necklace",
+                "Stats": {
+                    "Agility": 5
+                },
+                "Rarity": "Rare",
+                "Value": 120
+            },
+            {
+                "Id": "acc_003",
+                "Name": "Mage Pendant",
+                "Stats": {
+                    "ManaBonus": 30
+                },
+                "Rarity": "Rare",
+                "Value": 150
+            },
+            {
+                "Id": "acc_004",
+                "Name": "Shadow Emblem",
+                "Stats": {
+                    "ShadowDamage": 10
+                },
+                "Rarity": "Rare",
+                "Value": 300
+            }
+        ],
+        "Consumables": [
+            {
+                "Id": "potion_001",
+                "Name": "Small Healing Potion",
+                "Stats": {
+                    "RestoreHP": 40
+                },
+                "Rarity": "Common",
+                "Value": 20
+            },
+            {
+                "Id": "potion_002",
+                "Name": "Medium Healing Potion",
+                "Stats": {
+                    "RestoreHP": 80
+                },
+                "Rarity": "Uncommon",
+                "Value": 45
+            },
+            {
+                "Id": "potion_003",
+                "Name": "Mana Potion",
+                "Stats": {
+                    "RestoreMP": 50
+                },
+                "Rarity": "Common",
+                "Value": 25
+            },
+            {
+                "Id": "potion_004",
+                "Name": "Awakening Potion",
+                "Rarity": "Rare",
+                "Value": 120
+            },
+            {
+                "Id": "potion_005",
+                "Name": "Shadow Essence",
+                "Rarity": "Epic",
+                "Value": 250
+            }
+        ]
     }
-  },
-  {
-    "Id": "weap_001",
-    "Name": "Rusty Iron Sword",
-    "Description": "An old, chipped sword that has seen better days.",
-    "Type": "Weapon",
-    "Value": 25,
-    "Weight": 5,
-    "Rarity": "Common",
-    "LevelRequirement": 1,
-    "Stats": {
-      "AttackBonus": 5
-    }
-  },
-  {
-    "Id": "arm_001",
-    "Name": "Leather Tunic",
-    "Description": "Basic protective clothing made of hardened leather.",
-    "Type": "Armor",
-    "Value": 30,
-    "Weight": 4,
-    "Rarity": "Common",
-    "LevelRequirement": 1,
-    "Stats": {
-      "DefenseBonus": 3
-    }
-  }
-]
+}

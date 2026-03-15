@@ -2,15 +2,13 @@ using ConsoleRPG.Interfaces;
 
 namespace ConsoleRPG.Model
 {
-    // GUIDE: The Player class represents the main character.
-    // Apply Encapsulation: keep setters private where possible (e.g., Level, XP)
-    // and only modify them through specific methods like GainXP() or LevelUp().
     public class Player : IEntity
     {
         // --- Basic Attributes ---
         public string Name { get; set; } // Player's name
         public int Level { get; private set; } = 1; //Player level starts at 1
         public int XP { get; private set; } = 0; // Experience points
+        public bool IsAlive => HP > 0;
 
         // --- Core Stats ---
         public int MaxHP { get; private set; } = 100; //Maximum HP
@@ -110,7 +108,35 @@ namespace ConsoleRPG.Model
             Strength += weapon.AttackBonus;
         }
 
+        public void ConsumeMana(int amount)
+        {
+            MP -= amount;
+            if (MP < 0)
+            {
+                MP = 0;
+            }
+        }
 
+        public void IncreaseStrength(int amount)
+        {
+            Strength += amount;
+        }
+
+        public void IncreaseDefense(int amount)
+        {
+            Defense += amount;
+        }
+
+        public void Attack(Enemy target)
+        {
+            int damage = Strength;
+            if (EquippedWeapon != null)
+            {
+                damage += EquippedWeapon.AttackBonus;
+            }
+            Console.WriteLine($"{Name} attacks {target.Name} for {damage} damage!");
+            target.TakeDamage(damage);
+        }
     }
 }
 

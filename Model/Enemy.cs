@@ -11,6 +11,7 @@ namespace ConsoleRPG.Model
         // --- Core Stats ---
         public int MaxHP { get; protected set; }
         public int HP { get; set; }
+        public bool IsAlive => HP > 0;
         public int Strength { get; protected set; }
         public int Defense { get; protected set; }
 
@@ -52,7 +53,7 @@ namespace ConsoleRPG.Model
     }
 
     // Example of a stronger enemy Boss
-    public class OrcWarlord: Enemy
+    public class OrcWarlord : Enemy
     {
         public int SpecialAttackPower { get; private set; }
 
@@ -88,11 +89,11 @@ namespace ConsoleRPG.Model
         }
     }
 
-    public class Demonlord: Enemy
+    public class Demonlord : Enemy
     {
         public int SpecialAttackPower { get; private set; }
 
-        public OrcWarlord(string name, int level) : base(name, level)
+        public Demonlord(string name, int level) : base(name, level)
         {
             MaxHP += 700;
             HP = MaxHP;
@@ -321,23 +322,6 @@ namespace ConsoleRPG.Model
                 HP = 0;
             }
         }
-
-        public override void TakeDamage(int damage)
-        {
-            int damageTaken = damage - Defense;
-
-            if (damageTaken < 0)
-            {
-                damageTaken = 0;
-            }
-
-            HP -= damageTaken;
-
-            if (HP < 0)
-            {
-                HP = 0;
-            }
-        }
     }
 
     //Elite Enemy
@@ -472,10 +456,10 @@ namespace ConsoleRPG.Model
             }
         }
     }
-    
+
     public class UndeadKnight : Enemy
     {
-        public UndeadKnight(string name, int level) : base(name,level)
+        public UndeadKnight(string name, int level) : base(name, level)
         {
             MaxHP = 150;
             HP = MaxHP;
