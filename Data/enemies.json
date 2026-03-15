@@ -1,66 +1,312 @@
-[
-  {
-    "Id": "e_slime_01",
-    "Name": "Green Slime",
-    "Type": "Normal",
-    "Level": 1,
-    "Stats": {
-      "MaxHP": 20,
-      "Strength": 5,
-      "Defense": 2
-    },
-    "ExpectedLoot": {
-      "XP": 10,
-      "Gold": 5,
-      "DropTable": [
-        {
-          "Percentage": 10.0,
-          "ItemId": "potion_001"
+{
+  "Enemies": {
+    "Normal": [
+      {
+        "Id": "normal_001",
+        "Name": "Goblin",
+        "Type": "Normal",
+        "PowerRating": 10,
+        "ReqPlayerLevel": {
+          "MinLevel": 1,
+          "MaxLevel": 10
+        },
+        "EnemyLevel": 1,
+        "Stats": {
+          "PowerRating": 5,
+          "MaxHP": 20,
+          "Attack": 7,
+          "Strength": 5,
+          "Defense": 2
+        },
+        "ExpectedLoot": {
+          "XP": 10,
+          "Gold": 6,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
         }
-      ]
-    }
-  },
-  {
-    "Id": "e_goblin_01",
-    "Name": "Weak Goblin",
-    "Type": "Normal",
-    "Level": 2,
-    "Stats": {
-      "MaxHP": 30,
-      "Strength": 10,
-      "Defense": 5
-    },
-    "ExpectedLoot": {
-      "XP": 25,
-      "Gold": 12,
-      "DropTable": [
-        {
-          "Percentage": 5.0,
-          "ItemId": "weap_001"
+      },
+      {
+        "Id": "normal_002",
+        "Name": "Dire Wolf",
+        "Type": "Normal",
+        "ReqPlayerLevel": {
+          "MinLevel": 1,
+          "MaxLevel": 10
+        },
+        "EnemyLevel": 2,
+        "Stats": {
+          "PowerRating": 10,
+          "MaxHP": 35,
+          "Attack": 9,
+          "Strength": 7,
+          "Defense": 4,
+          "SpecialAbility": {
+            "QuickBiteDamage": 11
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 15,
+          "Gold": 8,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
         }
-      ]
-    }
-  },
-  {
-    "Id": "e_boss_orc_01",
-    "Name": "Orc Warlord",
-    "Type": "Boss",
-    "Level": 5,
-    "Stats": {
-      "MaxHP": 500,
-      "Strength": 80,
-      "Defense": 70,
-      "SpecialAttackPower": 90
-    },
-    "ExpectedLoot": {
-      "XP": 500,
-      "Gold": 250,
-      "DropTable": [
-        {
-          "Percentage": 100.0,
-          "ItemId": "weap_boss_01"
+      },
+      {
+        "Id": "normal_003",
+        "Name": "Giant Spider",
+        "Type": "Normal",
+        "ReqPlayerLevel": {
+          "MinLevel": 1,
+          "MaxLevel": 10
+        },
+        "EnemyLevel": 3,
+        "Stats": {
+          "PowerRating": 15,
+          "MaxHP": 40,
+          "Attack": 10,
+          "Strength": 7,
+          "Defense": 5,
+          "SpecialAbility": {
+            "PoisonBiteDamage": 15
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 18,
+          "Gold": 10,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
         }
-      ]
-    }
+      },
+      {
+        "Id": "normal_004",
+        "Name": "Skeleton Warrior",
+        "Type": "Normal",
+        "ReqPlayerLevel": {
+          "MinLevel": 1,
+          "MaxLevel": 10
+        },
+        "EnemyLevel": 4,
+        "Stats": {
+          "PowerRating": 22,
+          "MaxHP": 50,
+          "Attack": 12,
+          "Strength": 8,
+          "Defense": 6,
+          "SpecialAbility": {
+            "BoneStrikeDamage": 20
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 22,
+          "Gold": 12,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      }
+    ],
+    "Elite": [
+      {
+        "Id": "elite_001",
+        "Name": "Orc Warrior",
+        "Type": "Elite",
+        "ReqPlayerLevel": {
+          "MinLevel": 10,
+          "MaxLevel": 20
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 40,
+          "MaxHP": 80,
+          "Attack": 18,
+          "Strength": 11,
+          "Defense": 10,
+          "SpecialAbility": {
+            "Rage": "Attack Increases"
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 50,
+          "Gold": 30,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      },
+      {
+        "Id": "elite_002",
+        "Name": "Demon Knight",
+        "Type": "Elite",
+        "ReqPlayerLevel": {
+          "MinLevel": 10,
+          "MaxLevel": 20
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 55,
+          "MaxHP": 100,
+          "Attack": 22,
+          "Strength": 13,
+          "Defense": 12,
+          "SpecialAbility": {
+            "HeavyStrike": 25
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 65,
+          "Gold": 45,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      }
+    ],
+    "Boss": [
+      {
+        "Id": "boss_001",
+        "Name": "Goblin Captain",
+        "Type": "Boss",
+        "ReqPlayerLevel": {
+          "MinLevel": 20,
+          "MaxLevel": 35
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 60,
+          "MaxHP": 150,
+          "Attack": 20,
+          "Strength": 13,
+          "Defense": 10,
+          "SpecialAbility": {
+            "SummonGoblins": {
+              "GoblinOneDamage": 15,
+              "GoblinTwoDamage": 10,
+              "GoblinThreeDamage": 5
+            }
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 120,
+          "Gold": 60,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      },
+      {
+        "Id": "boss_002",
+        "Name": "Venom Spider Queen",
+        "Type": "Boss",
+        "ReqPlayerLevel": {
+          "MinLevel": 20,
+          "MaxLevel": 35
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 85,
+          "MaxHP": 200,
+          "Attack": 22,
+          "Strength": 12,
+          "Defense": 10,
+          "SpecialAbility": {
+            "PoisonSpray": 10
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 200,
+          "Gold": 120,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      },
+      {
+        "Id": "boss_003",
+        "Name": "Orc Warlord",
+        "Type": "Boss",
+        "ReqPlayerLevel": {
+          "MinLevel": 20,
+          "MaxLevel": 35
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 115,
+          "MaxHP": 280,
+          "Attack": 35,
+          "Strength": 25,
+          "Defense": 20,
+          "SpecialAbility": {
+            "RageMode": "Raging"
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 320,
+          "Gold": 200,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      },
+      {
+        "Id": "boss_004",
+        "Name": "Demon Commander",
+        "Type": "Boss",
+        "ReqPlayerLevel": {
+          "MinLevel": 20,
+          "MaxLevel": 35
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 150,
+          "MaxHP": 420,
+          "Attack": 45,
+          "Strength": 32,
+          "Defense": 30,
+          "SpecialAbility": {
+            "FireAttack": 50
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 500,
+          "Gold": 300,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      }
+    ]
   }
-]
+}
