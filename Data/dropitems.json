@@ -59,6 +59,148 @@
                "Rarity": "Common"
             }
 
+        ],
+        "ERankWeapon": [
+            {
+                "Id": "dropweapon_001",
+                "name": "Harpoon",
+                "stats": {
+                    "DamageBonus": 25,
+                    "CriticalChanceBonus": 5
+                },
+                "Rarity": "Uncommon"
+            },
+            {
+               "Id": "dropweapon_002",
+                "name": "Claws",
+                "stats": {
+                    "DamageBonus": 15,
+                    "AttackSpeedBonus": 10
+                },
+                "Rarity": "Common" 
+            },
+            {
+                "Id": "dropweapon_003",
+                "name": "Goblin's Dagger",
+                "stats": {
+                    "DamageBonus": 15,
+                    "ConfusionBonus": 10
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "dropweapon_004",
+                "name": "Goblin's Throwing Axe",
+                "stats": {
+                    "DamageBonus": 20,
+                    "StunDuration": 1.5
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "dropweapon_005",
+                "name": "Goblin's Crossbow",
+                "stats": {
+                    "DamageBonus": 15,
+                    "BleedBonus": 3
+                },
+                "Rarity": "Common"
+            }
+        ],
+        "DRankArmor": [
+            {
+                "Id": "droparm_001",
+                "name": "Giant Spider Silk Armor",
+                "stats": {
+                    "DefenseBonus": 20,
+                    "PoisonResistanceBonus": 10
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "droparm_002",
+                "name": "Giant Spider Web Cloak",
+                "stats": {
+                    "DefenseBonus": 15,
+                    "MovementBonus": 10
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "droparm_003",
+                "name": "Venom Spider's Robe",
+                "stats": {
+                    "DefenseBonus": 25,
+                    "PoisonResistanceBonus": 15
+                },
+                "Rarity": "Common"
+            }
+        ],
+        "DrankHelmet": [
+            {
+                "Id": "drophelm_001",
+                "name": "Venomous Helmet",
+                "stats": {
+                    "DefenseBonus": 20,
+                    "PoisonResistanceBonus": 15,
+                    "PoisonBonus": 10
+                },
+                "Rarity": "Uncommon"
+            },
+            {
+                "Id": "drophelm_002",
+                "name": "Venom-Spiked Helmet",
+                "stats": {
+                    "DefenseBonus": 20,
+                    "PoisonBonus": 9,
+                    "PoisonResistanceBonus": 13
+                },
+                "Rarity": "Uncommon"
+            },
+            {
+                "Id": "drophelm_003",
+                "name": "Arachnid Helmet",
+                "stats": {
+                    "DefenseBonus": 30,
+                    "HealthBonus": 15
+                },
+                "Rarity": "Rare"
+            }
+        ],
+        "DRankWeapon": [
+            {
+                "Id": "dropweapon_001",
+                "name": "Venom-Spiked Dagger",
+                "stats": {
+                    "DamageBonus": 20,
+                    "PoisonChanceBonus": 5
+                },
+                "Rarity": "Uncommon"
+            },
+            {
+                "Id": "dropweapon_002",
+                "name": "Venomous Scepter",
+                "stats": {
+                    "DamageBonus": 25,
+                    "PoisonChanceBonus": 15
+                },
+                "Rarity": "Rare"
+            },
+            {
+                "Id": "dropweapon_003",
+                "name": "Webbed Shield",
+                "stats": {
+                    "BlockBonus": 25,
+                    "DamageResistanceBonus": 12
+                },
+                "Rarity": "Uncommon"
+            },
+            {
+                
+            }
         ]
+
     }
+
+
 }
