@@ -1,0 +1,142 @@
+{
+    "Dungeons": {
+        "E-Rank": [
+            {
+                "Id": "dungeon_001",
+                "Name": "Abbandoned Tunnel",
+                "Description": "A deserted mining tunnel now occupied by goblins and wild wolves. Weak monsters, but dangerous in groups. Defeat the Goblin Captain to clear the gate.",
+                "Difficulty": "E-Rank",
+                "Enemies": [
+                    {
+                        "EnemyId": "normal_001",
+                        "Count": 10
+                    },
+                    {
+                        "EnemyId": "normal_002",
+                        "Count": 5
+                    }
+                ],
+                "Boss": {
+                    "EnemyId": "boss_001",
+                    "Count": 1
+                },
+                "Rewards": {
+                    "XP": 100,
+                    "Gold": 100,
+                    "ItemIds": [
+                        "potion_001",
+                        "potion_002"
+                    ]
+                }
+            }
+        ],
+        "D-Rank": [
+            {
+                "Id": "dungeon_002",
+                "Name": "Spider Cave",
+                "Description": "A dark cave filled with giant spiders and thick webs. The Venom Spider Queen lurks deep inside guarding rare materials.",
+                "Difficulty": "D-Rank",
+                "Enemies": [
+                    {
+                        "EnemyId": "normal_003",
+                        "Count": 15
+                    }
+                ],
+                "Boss": {
+                    "EnemyId": "boss_002",
+                    "Count": 1
+                },
+                "Rewards": {
+                    "XP": 200,
+                    "Gold": 200,
+                    "ItemIds": [
+                        "potion_001",
+                        "potion_002"
+                    ]
+                }
+            }
+        ],
+        "C-Rank": [
+            {
+                "Id": "dungeon_003",
+                "Name:": "Orc Camp",
+                "Description": "A battle camp controlled by trained orc soldiers. The powerful Orc Warlord leads the tribe and protects valuable equipment.",
+                "Difficulty": "C-Rank",
+                "Enemies": [
+                    {
+                        "EnemyId": "normal_004",
+                        "Count": 20
+                    },
+                    {
+                        "EnemyId": "elite_001",
+                        "Count": 5
+                    }
+                ],
+                "Boss": {
+                    "EnemyId": "boss_003",
+                    "Count": 1
+                },
+                "Rewards": {
+                    "XP": 300,
+                    "Gold": 300,
+                    "ItemIds": [
+                        "potion_001",
+                        "potion_002"
+                    ]
+                }
+            }
+        ],
+        "B-Rank": [
+            {
+                "Id": "dungeon_004",
+                "Name": "Demon Castle",
+                "Description": "A cursed castle inhabited by demon knights. The Demon Commander rules the dark halls and guards an epic weapon.",
+                "Difficulty": "B-Rank",
+                "Enemies": [
+                    {
+                        "EnemyId": "elite_002",
+                        "Count": 15
+                    }
+                ],
+                "Boss": {
+                    "EnemyId": "boss_004",
+                    "Count": 1
+                },
+                "Rewards": {
+                    "XP": 400,
+                    "Gold": 400,
+                    "ItemIds": [
+                        "potion_001",
+                        "potion_002"
+                    ]
+                }
+            }
+        ],
+        "A-Rank": [
+            {
+                "Id": "dungeon_005",
+                "Name": "Shadow Fortress",
+                "Description": "A fortress swallowed by shadows and filled with shadow beasts. The Shadow General protects a legendary artifact.",
+                "Difficulty": "A-Rank",
+                "Enemies": [
+                    {
+                        "EnemyId": "elite_003",
+                        "Count": 20
+                    }
+                ],
+                "Boss": {
+                    "EnemyId": "boss_005",
+                    "Count": 1
+                },
+                "Rewards": {
+                    "XP": 1000,
+                    "Gold": 1000,
+                    "ItemIds": [
+                        "potion_001",
+                        "potion_002"
+                    ]
+                }
+            }
+        ]
+    }
+}

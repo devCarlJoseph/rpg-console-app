@@ -180,6 +180,36 @@
             }
           ]
         }
+      },
+      {
+        "Id": "elite_003",
+        "Name": "Shadow Beast",
+        "Type": "Elite",
+        "ReqPlayerLevel": {
+          "MinLevel": 10,
+          "MaxLevel": 20
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 55,
+          "MaxHP": 100,
+          "Attack": 22,
+          "Strength": 13,
+          "Defense": 12,
+          "SpecialAbility": {
+            "HeavyStrike": 25
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 65,
+          "Gold": 45,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
       }
     ],
     "Boss": [
@@ -299,6 +329,36 @@
         "ExpectedLoot": {
           "XP": 500,
           "Gold": 300,
+          "DropTable": [
+            {
+              "Percentage": 10.0,
+              "ItemId": "potion_001"
+            }
+          ]
+        }
+      },
+      {
+        "Id": "boss_005",
+        "Name": "Shadow General",
+        "Type": "Boss",
+        "ReqPlayerLevel": {
+          "MinLevel": 20,
+          "MaxLevel": 35
+        },
+        "EnemyLevel": 6,
+        "Stats": {
+          "PowerRating": 200,
+          "MaxHP": 2000,
+          "Attack": 200,
+          "Strength": 150,
+          "Defense": 100,
+          "SpecialAbility": {
+            "ShadowStrike": 100
+          }
+        },
+        "ExpectedLoot": {
+          "XP": 1000,
+          "Gold": 1000,
           "DropTable": [
             {
               "Percentage": 10.0,
