@@ -6,6 +6,6 @@ namespace ConsoleRPG.Interfaces
     {
         string Name { get; }
         int Value { get; }
-        void Use(Player player){}
+        void Use(Player player);
     }
 }

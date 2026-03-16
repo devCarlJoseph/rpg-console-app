@@ -4,6 +4,6 @@ namespace ConsoleRPG.Interfaces
     {
         int HP { get; set; }
         int MaxHP { get; }
-        void TakeDamage(int damage){}
+        void TakeDamage(int damage);
     }
 }

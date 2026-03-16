@@ -7,14 +7,15 @@ namespace ConsoleRPG.Model
     public int RecommendedLevel { get; private set; }
     public bool IsCleared { get; private set; }
 
-    private List<Enemy> _enemyWaves;
+    // Use a queue to model waves of enemies that are fought in order.
+    private readonly Queue<Enemy> _enemyWaves;
     public Enemy Boss { get; private set; }
 
     public Dungeon(string name, int recommendedLevel, List<Enemy> enemyWaves, Enemy boss)
     {
       Name = name;
       RecommendedLevel = recommendedLevel;
-      _enemyWaves = enemyWaves;
+      _enemyWaves = new Queue<Enemy>(enemyWaves);
       Boss = boss;
       IsCleared = false;
     }

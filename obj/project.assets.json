@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Carl Files\\rpg-game\\rpg-game.csproj",
+      "projectUniqueName": "d:\\Carl Files\\rpg-game\\rpg-game.csproj",
       "projectName": "rpg-game",
-      "projectPath": "D:\\Carl Files\\rpg-game\\rpg-game.csproj",
+      "projectPath": "d:\\Carl Files\\rpg-game\\rpg-game.csproj",
       "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
-      "outputPath": "D:\\Carl Files\\rpg-game\\obj\\",
+      "outputPath": "d:\\Carl Files\\rpg-game\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config"
