@@ -1,6 +1,7 @@
 using ConsoleRPG.Interfaces;
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
+using ConsoleRPG.UI;
 
 namespace ConsoleRPG.Core
 {
@@ -20,7 +21,6 @@ namespace ConsoleRPG.Core
         private readonly Player _player;
         private readonly ShopService _shop = new();
         private readonly QuestManager _quests = new();
-        private Enemy? _lastDefeatedEnemy;
 
         public GameEngine(Player player)
         {
@@ -29,57 +29,41 @@ namespace ConsoleRPG.Core
 
         public void Run()
         {
-            SafeClear();
+            ConsoleUi.SafeClear();
             SystemMessageService.System($"Welcome, {_player.Name}. The System is now online.");
             _quests.AssignDailyQuest(_player);
 
             while (true)
             {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("=== Main Menu ===");
-                Console.ResetColor();
-                Console.WriteLine("  1. Character Status");
-                Console.WriteLine("  2. Inventory");
-                Console.WriteLine("  3. Shop");
-                Console.WriteLine("  4. Quests");
-                Console.WriteLine("  5. Enter Dungeon");
-                Console.WriteLine("  6. Save Game");
-                Console.WriteLine("  7. Exit Game");
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("\nSelect: ");
-                Console.ResetColor();
-
-                var choice = Console.ReadLine()?.Trim();
+                var choice = MainMenuView.Show(_player);
                 switch (choice)
                 {
-                    case "1":
-                        ShowStats();
+                    case MainMenuView.MainMenuChoice.Status:
+                        PlayerStatusView.Show(_player);
                         break;
 
-                    case "2":
-                        InventoryMenu();
+                    case MainMenuView.MainMenuChoice.Inventory:
+                        InventoryView.Show(_player);
                         break;
 
-                    case "3":
-                        ShopMenu();
+                    case MainMenuView.MainMenuChoice.Shop:
+                        ShopView.Show(_shop, _player);
                         break;
 
-                    case "4":
-                        QuestsMenu();
+                    case MainMenuView.MainMenuChoice.Quests:
+                        QuestBoardView.Show(_quests, _player);
                         break;
 
-                    case "5":
+                    case MainMenuView.MainMenuChoice.EnterDungeon:
                         EnterDungeon();
                         break;
 
-                    case "6":
+                    case MainMenuView.MainMenuChoice.Save:
                         SaveLoadService.Save(_player);
                         SystemMessageService.System("Game saved to Data/savegame.json");
                         break;
 
-                    case "7":
+                    case MainMenuView.MainMenuChoice.Exit:
                         SystemMessageService.System("Exiting to title screen...");
                         return;
 
@@ -90,176 +74,23 @@ namespace ConsoleRPG.Core
             }
         }
 
-        private static void SafeClear()
-        {
-            try
-            {
-                Console.Clear();
-            }
-            catch (IOException)
-            {
-            }
-        }
-
-        private void ShowStats()
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n=== Player Status ===");
-            Console.ResetColor();
-            Console.WriteLine($"  Name : {_player.Name}");
-            Console.WriteLine($"  Level: {_player.Level} (XP: {_player.XP})");
-            Console.WriteLine($"  Gold : {_player.Gold}");
-            Console.WriteLine($"  HP   : {Bar(_player.HP, _player.MaxHP)} {_player.HP}/{_player.MaxHP}");
-            Console.WriteLine($"  MP   : {Bar(_player.MP, _player.MaxMP)} {_player.MP}/{_player.MaxMP}");
-            Console.WriteLine($"  STR  : {_player.Strength}");
-            Console.WriteLine($"  AGI  : {_player.Agility}");
-            Console.WriteLine($"  INT  : {_player.Intelligence}");
-            Console.WriteLine($"  DEF  : {_player.Defense}");
-            Console.WriteLine($"  Shadows: {_player.Shadows.Count}");
-        }
-
-        private void InventoryMenu()
-        {
-            while (true)
-            {
-                Console.WriteLine("\n=== Inventory ===");
-                if (_player.Inventory.Items.Count == 0)
-                {
-                    Console.WriteLine("  (empty)");
-                }
-                else
-                {
-                    for (int i = 0; i < _player.Inventory.Items.Count; i++)
-                    {
-                        var item = _player.Inventory.Items[i];
-                        Console.WriteLine($"  {i + 1}. {item.Name} (Value: {item.Value}g)");
-                    }
-                }
-
-                Console.WriteLine("\n  U <#>  - Use item");
-                Console.WriteLine("  B      - Back");
-                Console.Write("> ");
-
-                var input = Console.ReadLine()?.Trim();
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    continue;
-                }
-
-                if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
-                {
-                    return;
-                }
-
-                if (input.StartsWith("u", StringComparison.OrdinalIgnoreCase))
-                {
-                    var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
-                    {
-                        SystemMessageService.Hint("Usage: U <#>");
-                        continue;
-                    }
-
-                    if (!_player.Inventory.UseItem(idx - 1, _player))
-                    {
-                        SystemMessageService.Hint("Invalid item number.");
-                        continue;
-                    }
-
-                    SystemMessageService.Success("Item used.");
-                }
-            }
-        }
-
-        private void ShopMenu()
-        {
-            while (true)
-            {
-                Console.WriteLine("\n=== Shop ===");
-                Console.WriteLine($"Gold: {_player.Gold}");
-                if (_shop.Stock.Count == 0)
-                {
-                    Console.WriteLine("  (sold out)");
-                }
-                else
-                {
-                    for (int i = 0; i < _shop.Stock.Count; i++)
-                    {
-                        var item = _shop.Stock[i];
-                        Console.WriteLine($"  {i + 1}. {item.Name} - {item.Value}g");
-                    }
-                }
-
-                Console.WriteLine("\n  B      - Back");
-                Console.WriteLine("  Buy <#> - Buy item");
-                Console.Write("> ");
-                var input = Console.ReadLine()?.Trim();
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    continue;
-                }
-
-                if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
-                {
-                    return;
-                }
-
-                if (input.StartsWith("buy", StringComparison.OrdinalIgnoreCase))
-                {
-                    var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
-                    {
-                        SystemMessageService.Hint("Usage: Buy <#>");
-                        continue;
-                    }
-
-                    var ok = _shop.TryBuy(_player, idx - 1);
-                    if (!ok)
-                    {
-                        SystemMessageService.Warning("Purchase failed (invalid item or not enough gold).");
-                        continue;
-                    }
-
-                    SystemMessageService.Success("Purchased!");
-                }
-            }
-        }
-
-        private void QuestsMenu()
-        {
-            Console.WriteLine("\n=== Quests ===");
-            if (_player.ActiveQuests.Count == 0)
-            {
-                Console.WriteLine("  (no active quests)");
-            }
-            else
-            {
-                foreach (var q in _player.ActiveQuests)
-                {
-                    Console.WriteLine($"  - {q.Title}: {q.Description}");
-                }
-            }
-
-            Console.WriteLine("\nCompleted:");
-            if (_player.CompletedQuests.Count == 0)
-            {
-                Console.WriteLine("  (none)");
-            }
-            else
-            {
-                foreach (var q in _player.CompletedQuests)
-                {
-                    Console.WriteLine($"  - {q.Title}");
-                }
-            }
-        }
+        // UI is implemented in the UI folder (InventoryView, ShopView, QuestBoardView, etc.)
 
         private void EnterDungeon()
         {
-            var gate = GateGenerationService.Generate(_player);
-            SystemMessageService.System($"A Gate has appeared: {gate.Name} (Recommended Lv {gate.RecommendedLevel})");
+            var db = DungeonDataService.Load();
+            var chosen = DungeonSelectView.ChooseDungeon(db);
+            if (chosen is null)
+            {
+                return;
+            }
+            var raid = DungeonRaidService.BuildRaid(chosen);
 
-            // Fight through waves
+            var gate = new Dungeon(raid.Name, raid.RecommendedLevel, raid.Waves, raid.Boss);
+            SystemMessageService.System($"Gate selected: {gate.Name} (Recommended Lv {gate.RecommendedLevel})");
+
+            _quests.AssignDungeonQuests(_player, raid.QuestIds);
+
             while (_player.IsAlive)
             {
                 var enemy = gate.DequeueNextEnemy();
@@ -272,7 +103,6 @@ namespace ConsoleRPG.Core
                 RunCombat(enemy);
             }
 
-            // Boss
             if (_player.IsAlive)
             {
                 SystemMessageService.Warning($"Boss encounter: {gate.Boss.Name}!");
@@ -280,6 +110,22 @@ namespace ConsoleRPG.Core
                 if (_player.IsAlive)
                 {
                     gate.ClearDungeon();
+
+                    _player.GainXP(Math.Max(0, raid.Rewards.XP));
+                    _player.AddGold(Math.Max(0, raid.Rewards.Gold));
+
+                    var itemsById = ItemDataService.LoadItemsById();
+                    foreach (var itemId in raid.Rewards.ItemIds)
+                    {
+                        if (itemsById.TryGetValue(itemId, out var item))
+                        {
+                            _player.Inventory.Add(item);
+                        }
+                    }
+
+                    _quests.NotifyDungeonCleared(_player, raid.DungeonId);
+
+                    SystemMessageService.Success($"Dungeon rewards: +{raid.Rewards.XP} XP, +{raid.Rewards.Gold}g");
                 }
             }
 
@@ -292,56 +138,97 @@ namespace ConsoleRPG.Core
 
         private void RunCombat(Enemy enemy)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"\nEnemy: {enemy.Name} (Lv {enemy.Level}) HP {enemy.HP}/{enemy.MaxHP}");
-            Console.ResetColor();
-
+            string? log = null;
             while (_player.IsAlive && enemy.IsAlive)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\n[COMBAT] 1) Attack  2) Use Item  3) Retreat");
-                Console.ResetColor();
-                Console.Write("> ");
-                var action = Console.ReadLine()?.Trim();
-                if (string.IsNullOrWhiteSpace(action))
-                {
-                    continue;
-                }
+                CombatView.RenderEncounter(_player, enemy, $"Wave Encounter", log);
+                var action = CombatView.PromptAction(_player);
 
-                if (action == "3")
+                if (action == CombatView.CombatAction.Retreat)
                 {
-                    SystemMessageService.Hint("You retreated from the gate.");
                     return;
                 }
 
-                if (action == "2")
+                if (action == CombatView.CombatAction.UseItem)
                 {
-                    if (_player.Inventory.Items.Count == 0)
+                    var idx = CombatView.PromptItemIndex(_player);
+                    if (idx is null)
                     {
-                        SystemMessageService.Hint("No items.");
+                        log = "Item use cancelled.";
                         continue;
                     }
 
-                    Console.Write("Use item #: ");
-                    var num = Console.ReadLine();
-                    if (!int.TryParse(num, out var idx) || !_player.Inventory.UseItem(idx - 1, _player))
+                    var ok = _player.Inventory.UseItem(idx.Value, _player);
+                    log = ok ? "Item used." : "Invalid item selection.";
+                }
+                else if (action == CombatView.CombatAction.Regenerate)
+                {
+                    var hp = Math.Max(1, 3 + _player.Intelligence / 3);
+                    var mp = Math.Max(1, 2 + _player.Intelligence / 4);
+                    _player.Heal(hp);
+                    _player.RestoreMana(mp);
+                    log = $"You focused and regenerated +{hp} HP, +{mp} MP.";
+                }
+                else if (action == CombatView.CombatAction.Attack)
+                {
+                    var attackType = CombatView.PromptAttackType(_player);
+                    if (attackType == CombatView.AttackType.Back)
                     {
-                        SystemMessageService.Hint("Invalid item number.");
+                        log = "Attack cancelled.";
                         continue;
                     }
 
-                    SystemMessageService.Success("Item used.");
+                    if (attackType == CombatView.AttackType.Physical)
+                    {
+                        var playerResult = CombatService.CalculatePlayerPhysicalDamage(_player, enemy);
+                        log = ApplyDamageAndDescribe(playerResult, enemy);
+                    }
+                    else if (attackType == CombatView.AttackType.Magic)
+                    {
+                        const int mpCost = 5;
+                        if (_player.MP < mpCost)
+                        {
+                            log = "Not enough MP for magic attack.";
+                            continue;
+                        }
+
+                        _player.ConsumeMana(mpCost);
+                        var raw = Math.Max(1, _player.Intelligence * 2);
+                        enemy.TakeDamage(raw);
+                        log = $"You cast a magic blast for {raw} damage. (-{mpCost} MP)";
+                    }
+                    else // Skill
+                    {
+                        var skill = CombatView.PromptSkill(_player);
+                        if (skill is null)
+                        {
+                            log = "Skill cancelled.";
+                            continue;
+                        }
+
+                        if (_player.MP < skill.ManaCost)
+                        {
+                            log = $"Not enough MP to use {skill.Name}.";
+                            continue;
+                        }
+
+                        // Skill handles its own MP + damage; we just show a clean log line.
+                        var beforeHp = enemy.HP;
+                        var beforeMp = _player.MP;
+                        skill.Execute(_player, enemy);
+                        var dealt = Math.Max(0, beforeHp - enemy.HP);
+                        var spent = Math.Max(0, beforeMp - _player.MP);
+                        log = $"Used {skill.Name}. {enemy.Name} took {dealt} damage. (-{spent} MP)";
+                    }
                 }
                 else
                 {
-                    var playerResult = CombatService.CalculatePlayerPhysicalDamage(_player, enemy);
-                    ResolveDamage(playerResult, enemy);
+                    log = "Invalid action.";
+                    continue;
                 }
 
                 if (!enemy.IsAlive)
                 {
-                    _lastDefeatedEnemy = enemy;
-
                     var xp = 25 + enemy.Level * 10;
                     var gold = 10 + enemy.Level * 3;
 
@@ -356,8 +243,26 @@ namespace ConsoleRPG.Core
                 }
 
                 var enemyResult = CombatService.CalculateEnemyPhysicalDamage(enemy, _player);
-                ResolveDamage(enemyResult, _player);
+                var enemyLine = ApplyDamageAndDescribe(enemyResult, _player);
+                log = string.IsNullOrWhiteSpace(log) ? enemyLine : (log + "  |  " + enemyLine);
             }
+        }
+
+        private static string ApplyDamageAndDescribe(CombatResult result, IEntity defender)
+        {
+            if (!result.IsHit)
+            {
+                return $"{result.Source} missed. (Evaded)";
+            }
+
+            defender.HP -= result.DamageDealt;
+            if (defender.HP < 0)
+            {
+                defender.HP = 0;
+            }
+
+            var critText = result.IsCritical ? " (CRIT!)" : string.Empty;
+            return $"{result.Source} deals {result.DamageDealt} damage{critText}.";
         }
 
         private void OfferExtraction(Enemy defeatedEnemy)
@@ -382,42 +287,7 @@ namespace ConsoleRPG.Core
             }
         }
 
-        private static void ResolveDamage(CombatResult result, IEntity defender)
-        {
-            if (!result.IsHit)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"{result.Source}'s attack missed! (Evaded)");
-                Console.ResetColor();
-                return;
-            }
-
-            defender.HP -= result.DamageDealt;
-            if (defender.HP < 0)
-            {
-                defender.HP = 0;
-            }
-
-            ConsoleColor color = result.Source == "Player" ? ConsoleColor.Cyan : ConsoleColor.Red;
-            Console.ForegroundColor = color;
-
-            var critText = result.IsCritical ? " (CRIT!)" : string.Empty;
-            Console.WriteLine($"{result.Source} deals {result.DamageDealt} damage{critText}!");
-            Console.ResetColor();
-        }
-
-        private static string Bar(int current, int max, int width = 20)
-        {
-            if (max <= 0)
-            {
-                return "[--------------------]";
-            }
-
-            current = Math.Clamp(current, 0, max);
-            var filled = (int)Math.Round((double)current / max * width);
-            filled = Math.Clamp(filled, 0, width);
-            return "[" + new string('█', filled) + new string('-', width - filled) + "]";
-        }
+        // Status bar is implemented in PlayerStatusView
     }
 }
 

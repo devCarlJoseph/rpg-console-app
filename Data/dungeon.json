@@ -6,6 +6,10 @@
                 "Name": "Abbandoned Tunnel",
                 "Description": "A deserted mining tunnel now occupied by goblins and wild wolves. Weak monsters, but dangerous in groups. Defeat the Goblin Captain to clear the gate.",
                 "Difficulty": "E-Rank",
+                "QuestIds": [
+                    "q_clear_dungeon_001",
+                    "q_kill_goblin_tunnel"
+                ],
                 "Enemies": [
                     {
                         "EnemyId": "normal_001",
@@ -36,6 +40,9 @@
                 "Name": "Spider Cave",
                 "Description": "A dark cave filled with giant spiders and thick webs. The Venom Spider Queen lurks deep inside guarding rare materials.",
                 "Difficulty": "D-Rank",
+                "QuestIds": [
+                    "q_clear_dungeon_002"
+                ],
                 "Enemies": [
                     {
                         "EnemyId": "normal_003",
@@ -59,9 +66,12 @@
         "C-Rank": [
             {
                 "Id": "dungeon_003",
-                "Name:": "Orc Camp",
+                "Name": "Orc Camp",
                 "Description": "A battle camp controlled by trained orc soldiers. The powerful Orc Warlord leads the tribe and protects valuable equipment.",
                 "Difficulty": "C-Rank",
+                "QuestIds": [
+                    "q_clear_dungeon_003"
+                ],
                 "Enemies": [
                     {
                         "EnemyId": "normal_004",
@@ -92,6 +102,9 @@
                 "Name": "Demon Castle",
                 "Description": "A cursed castle inhabited by demon knights. The Demon Commander rules the dark halls and guards an epic weapon.",
                 "Difficulty": "B-Rank",
+                "QuestIds": [
+                    "q_clear_dungeon_004"
+                ],
                 "Enemies": [
                     {
                         "EnemyId": "elite_002",
@@ -118,6 +131,9 @@
                 "Name": "Shadow Fortress",
                 "Description": "A fortress swallowed by shadows and filled with shadow beasts. The Shadow General protects a legendary artifact.",
                 "Difficulty": "A-Rank",
+                "QuestIds": [
+                    "q_clear_dungeon_005"
+                ],
                 "Enemies": [
                     {
                         "EnemyId": "elite_003",

@@ -1,40 +1,60 @@
-[
-  {
-    "Id": "q_001",
-    "Name": "The Slime Menace",
-    "Description": "The village outskirts are overrun with slimes. Defeat 5 of them to ensure the safety of the farmers.",
-    "Type": "Main",
-    "LevelRequirement": 1,
-    "Objectives": [
-      {
-        "Type": "Kill",
-        "TargetEnemyId": "e_slime_01",
-        "RequiredCount": 5
-      }
-    ],
-    "Rewards": {
-      "XP": 50,
-      "Gold": 25,
-      "ItemIds": ["potion_001", "potion_001"]
+{
+  "Quests": [
+    {
+      "Id": "q_clear_dungeon_001",
+      "Type": "ClearDungeon",
+      "Title": "Clear: Abandoned Tunnel",
+      "Description": "Clear the Abandoned Tunnel gate and defeat the boss.",
+      "DungeonId": "dungeon_001",
+      "RewardXP": 100,
+      "RewardGold": 100
+    },
+    {
+      "Id": "q_kill_goblin_tunnel",
+      "Type": "Kill",
+      "Title": "Purge the Goblins",
+      "Description": "Defeat 5 Goblins inside the Abandoned Tunnel.",
+      "DungeonId": "dungeon_001",
+      "TargetEnemyId": "normal_001",
+      "RequiredKills": 5,
+      "RewardXP": 40,
+      "RewardGold": 25
+    },
+    {
+      "Id": "q_clear_dungeon_002",
+      "Type": "ClearDungeon",
+      "Title": "Clear: Spider Cave",
+      "Description": "Clear the Spider Cave gate and defeat the boss.",
+      "DungeonId": "dungeon_002",
+      "RewardXP": 200,
+      "RewardGold": 200
+    },
+    {
+      "Id": "q_clear_dungeon_003",
+      "Type": "ClearDungeon",
+      "Title": "Clear: Orc Camp",
+      "Description": "Clear the Orc Camp gate and defeat the boss.",
+      "DungeonId": "dungeon_003",
+      "RewardXP": 300,
+      "RewardGold": 300
+    },
+    {
+      "Id": "q_clear_dungeon_004",
+      "Type": "ClearDungeon",
+      "Title": "Clear: Demon Castle",
+      "Description": "Clear the Demon Castle gate and defeat the boss.",
+      "DungeonId": "dungeon_004",
+      "RewardXP": 400,
+      "RewardGold": 400
+    },
+    {
+      "Id": "q_clear_dungeon_005",
+      "Type": "ClearDungeon",
+      "Title": "Clear: Shadow Fortress",
+      "Description": "Clear the Shadow Fortress gate and defeat the boss.",
+      "DungeonId": "dungeon_005",
+      "RewardXP": 1000,
+      "RewardGold": 1000
     }
-  },
-  {
-    "Id": "q_002",
-    "Name": "Gathering Herbs",
-    "Description": "The local healer needs medicinal herbs from the nearby forest.",
-    "Type": "Side",
-    "LevelRequirement": 1,
-    "Objectives": [
-      {
-        "Type": "Gather",
-        "TargetItemId": "mat_herb_01",
-        "RequiredCount": 10
-      }
-    ],
-    "Rewards": {
-      "XP": 30,
-      "Gold": 15,
-      "ItemIds": []
-    }
-  }
-]
+  ]
+}

@@ -99,6 +99,41 @@ namespace ConsoleRPG.Model
         }
     }
 
+    // Shadow "Arise" skill: extracted shadows become usable skills in combat
+    public class ShadowStrikeSkill : ActiveSkill
+    {
+        public string ShadowName { get; }
+        public int ShadowLevel { get; }
+        public int ShadowStrength { get; }
+
+        public ShadowStrikeSkill(Shadow shadow)
+            : base(
+                name: $"Shadow: {shadow.Name}",
+                description: "Command your shadow to strike the enemy.",
+                requiredLevel: 1,
+                manaCost: Math.Clamp(2 + shadow.Level / 3, 2, 10),
+                cooldown: 0)
+        {
+            ShadowName = shadow.Name;
+            ShadowLevel = shadow.Level;
+            ShadowStrength = shadow.Strength;
+        }
+
+        public override void Execute(Player caster, Enemy target)
+        {
+            if (caster.MP < ManaCost)
+            {
+                return;
+            }
+
+            caster.ConsumeMana(ManaCost);
+
+            // Scale with shadow STR and a little of player's STR/INT so it stays relevant.
+            var damage = Math.Max(1, ShadowStrength + caster.Strength / 4 + caster.Intelligence / 4);
+            target.TakeDamage(damage);
+        }
+    }
+
     // Passive skills give permanent bonuses
     public class PassiveSkill : Skill
     {

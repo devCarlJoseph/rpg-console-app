@@ -5,11 +5,12 @@ namespace ConsoleRPG.Services
 {
     public class ShopService
     {
-        private readonly List<IItem> _stock = new()
+        private readonly List<IItem> _stock;
+
+        public ShopService()
         {
-            new SmallHealthPotion(),
-            new SmallHealthPotion(),
-        };
+            _stock = ItemDataService.LoadAllItems();
+        }
 
         public IReadOnlyList<IItem> Stock => _stock;
 
@@ -29,17 +30,6 @@ namespace ConsoleRPG.Services
             player.Inventory.Add(item);
             _stock.RemoveAt(stockIndex);
             return true;
-        }
-
-        private sealed class SmallHealthPotion : IItem
-        {
-            public string Name => "Small Health Potion";
-            public int Value => 15;
-
-            public void Use(Player player)
-            {
-                player.Heal(25);
-            }
         }
     }
 }
