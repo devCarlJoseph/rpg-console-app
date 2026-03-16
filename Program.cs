@@ -1,5 +1,5 @@
 using ConsoleRPG.Core;
-using ConsoleRPG.Model;
+using ConsoleRPG.UI;
 
 namespace ConsoleRPG
 {
@@ -17,135 +17,40 @@ namespace ConsoleRPG
     {
         private static void Main(string[] args)
         {
-            ShowTitle();
-            ShowMainMenu();
-        }
-
-        private static void ShowTitle()
-        {
-            SafeClear();
-
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine(" ║                                                                                                                          ║");
-            Console.WriteLine(" ║                                                                                                                          ║");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("          ██╗███████╗██████╗ ██████╗ ███████╗██╗  ██╗      ██╗     ███████╗██╗   ██╗███████╗██╗     ██╗███╗   ██╗ ██████╗");
-            Console.WriteLine("          ██║██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║  ██║ ██║     ██╔════╝██║   ██║██╔════╝██║     ██║████╗  ██║██╔════╝");
-            Console.WriteLine("          ██║█████╗  ██████╔╝██████╔╝█████╗  ███████║      ██║     █████╗  ██║   ██║█████╗  ██║     ██║██╔██╗ ██║██║  ███╗");
-            Console.WriteLine("     ██   ██║██╔══╝  ██╔══██╗██╔══██╗██╔══╝  ██╔══██║      ██║     ██╔══╝  ██║   ██║██╔══╝  ██║     ██║██║╚██╗██║██║   ██║");
-            Console.WriteLine("     ╚█████╔╝███████╗██║  ██║██║  ██║███████╗██║  ██║  ██║ ███████╗███████╗╚██████╔╝███████╗███████╗██║██║ ╚████║╚██████╔╝");
-            Console.WriteLine("      ╚════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝       ╚═════╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝");
-            Console.WriteLine("");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("               █████╗  ███████╗██   ██╗ ██████╗ ███╗   ██╗█████╗       ██╗     ██╗███╗   ███╗██╗█████████ ██████║  ");
-            Console.WriteLine("               ██╔══██ ██╔════╝██   ██║██╔═══██╗████╗  ██║██╔══██╗     ██║     ██║████╗ ████║██║   ██╔══╝ ██ ╚══╗  ");
-            Console.WriteLine("               █████╔╝ █████╗  ╚██ ██╔╝██║   ██║██╔██╗ ██║██║  ██║     ██║     ██║██╔████╔██║██║   ██║    ██████║  ");
-            Console.WriteLine("               ██╔══██ ██╔══╝   ║███╔╝ ██║   ██║██║╚██╗██║██║  ██║     ██║     ██║██║╚██╔╝██║██║   ██║        ██║  ");
-            Console.WriteLine("               █████╔╝ ███████╗ ╚███║  ╚██████╔╝██║ ╚████║█████╔╝      ███████╗██║██║ ╚═╝ ██║██║   ██║    ██████║  ");
-            Console.WriteLine("               ╚════╝  ╚══════╝  ╚══╝   ╚═════╝ ╚═╝  ╚═══╝╚════╝       ╚══════╝╚═╝╚═╝     ╚═╝╚═╝   ╚═╝    ╚═════╝  ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(" ║                                                                                                                          ║");
-            Console.WriteLine(" ║                                                                                                                          ║");
-            Console.WriteLine(" ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// Simple title-screen menu that routes into the game engine.
-        /// </summary>
-        private static void ShowMainMenu()
-        {
+            StartMenu.ShowTitle();
             while (true)
             {
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("       1. Start Game");
-                Console.WriteLine("       2. Load Game (coming soon)");
-                Console.WriteLine("       3. Exit");
-
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("\n        Enter your choice: ");
-                Console.ResetColor();
-
-                var choice = Console.ReadLine();
-
-                switch (choice)
+                var result = StartMenu.ShowStartMenu();
+                switch (result)
                 {
-                    case "1":
-                        StartGame();
-                        return;
-
-                    case "2":
-                        LoadGame();
+                    case StartMenu.StartMenuResult.StartNew:
+                    {
+                        var player = StartMenu.CreateNewPlayer();
+                        var engine = new GameEngine(player);
+                        engine.Run();
+                        StartMenu.ShowTitle();
                         break;
+                    }
+                    case StartMenu.StartMenuResult.Load:
+                    {
+                        var player = StartMenu.LoadPlayer();
+                        if (player is null)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("\nNo save found at Data/savegame.json");
+                            Console.ResetColor();
+                            break;
+                        }
 
-                    case "3":
+                        var engine = new GameEngine(player);
+                        engine.Run();
+                        StartMenu.ShowTitle();
+                        break;
+                    }
+                    case StartMenu.StartMenuResult.Exit:
                         Console.WriteLine("Exiting the game...");
-                        Environment.Exit(0);
                         return;
-
-                    default:
-                        Console.WriteLine("Invalid choice. Press any key to try again...");
-                        Console.ReadKey(true);
-                        Console.Clear();
-                        ShowTitle();
-                        break;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Creates the Player, then hands control to the GameEngine loop.
-        /// </summary>
-        private static void StartGame()
-        {
-            SafeClear();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("Enter your hunter's name: ");
-            Console.ResetColor();
-
-            var name = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                name = "Jinwoo";
-            }
-
-            var player = new Player(name);
-            var engine = new GameEngine(player);
-            engine.Run();
-
-            // When Run() returns, we go back to the title menu.
-            Console.Clear();
-            ShowTitle();
-            ShowMainMenu();
-        }
-
-        private static void LoadGame()
-        {
-            var player = Services.SaveLoadService.Load();
-            if (player is null)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\nNo save found at Data/savegame.json");
-                Console.ResetColor();
-                return;
-            }
-
-            SafeClear();
-            var engine = new GameEngine(player);
-            engine.Run();
-        }
-
-        private static void SafeClear()
-        {
-            try
-            {
-                Console.Clear();
-            }
-            catch (IOException)
-            {
-                // Some hosts (CI/IDE runners) have no console buffer.
             }
         }
     }

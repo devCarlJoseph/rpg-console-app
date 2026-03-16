@@ -95,7 +95,17 @@ namespace ConsoleRPG.Services
 
             foreach (var shadowName in data.ShadowNames)
             {
-                player.Shadows.Add(new Shadow(shadowName, player.Level, 5 + player.Level, 2 + player.Level));
+                var shadow = new Shadow(shadowName, player.Level, 5 + player.Level, 2 + player.Level);
+                player.Shadows.Add(shadow);
+
+                var skillName = $"Shadow: {shadow.Name}";
+                var alreadyHas = player.ActiveSkills
+                    .OfType<ActiveSkill>()
+                    .Any(s => s.Name.Equals(skillName, StringComparison.OrdinalIgnoreCase));
+                if (!alreadyHas)
+                {
+                    player.ActiveSkills.Add(new ShadowStrikeSkill(shadow));
+                }
             }
 
             return player;

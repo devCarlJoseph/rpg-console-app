@@ -149,6 +149,20 @@ namespace ConsoleRPG.Model
             }
         }
 
+        public void RestoreMana(int amount)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+
+            MP += amount;
+            if (MP > MaxMP)
+            {
+                MP = MaxMP;
+            }
+        }
+
         public void IncreaseStrength(int amount)
         {
             Strength += amount;

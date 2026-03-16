@@ -26,6 +26,18 @@ namespace ConsoleRPG.Services
                 defense: Math.Max(0, defeatedEnemy.Defense / 2));
 
             player.Shadows.Add(shadow);
+
+            // Also grant a usable combat skill for this shadow.
+            // Prevent duplicates by name.
+            var skillName = $"Shadow: {shadow.Name}";
+            var alreadyHas = player.ActiveSkills
+                .OfType<ActiveSkill>()
+                .Any(s => s.Name.Equals(skillName, StringComparison.OrdinalIgnoreCase));
+            if (!alreadyHas)
+            {
+                player.ActiveSkills.Add(new ShadowStrikeSkill(shadow));
+            }
+
             return true;
         }
     }

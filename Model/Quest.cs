@@ -88,4 +88,33 @@ namespace ConsoleRPG.Model
             }
         }
     }
+
+    public class ClearDungeonQuest : Quest
+    {
+        public string DungeonId { get; }
+
+        public ClearDungeonQuest(string id, string title, string description, string dungeonId, int xp, int gold)
+            : base(id, title, description, xp, gold)
+        {
+            DungeonId = dungeonId;
+        }
+
+        public override void CheckProgress(Player player)
+        {
+            // Progress is driven externally via QuestManager.NotifyDungeonCleared(...)
+        }
+
+        public void NotifyCleared(string dungeonId, Player player)
+        {
+            if (IsCompleted)
+            {
+                return;
+            }
+
+            if (string.Equals(dungeonId, DungeonId, StringComparison.OrdinalIgnoreCase))
+            {
+                Complete(player);
+            }
+        }
+    }
 }
