@@ -18,76 +18,87 @@ namespace ConsoleRPG.Core
     public class GameEngine
     {
         private readonly Player _player;
-        private readonly Random _rng = new();
+        private readonly ShopService _shop = new();
+        private readonly QuestManager _quests = new();
+        private Enemy? _lastDefeatedEnemy;
 
         public GameEngine(Player player)
         {
             _player = player;
         }
 
-        /// <summary>
-        /// Starts the main in-city loop where the player can type commands.
-        /// </summary>
         public void Run()
         {
-            Console.Clear();
-            WriteSystemMessage($"Welcome, {_player.Name}. The System is now online.");
-            WriteHint("Type 'help' to see available commands.");
+            SafeClear();
+            SystemMessageService.System($"Welcome, {_player.Name}. The System is now online.");
+            _quests.AssignDailyQuest(_player);
 
             while (true)
             {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("=== Main Menu ===");
+                Console.ResetColor();
+                Console.WriteLine("  1. Character Status");
+                Console.WriteLine("  2. Inventory");
+                Console.WriteLine("  3. Shop");
+                Console.WriteLine("  4. Quests");
+                Console.WriteLine("  5. Enter Dungeon");
+                Console.WriteLine("  6. Save Game");
+                Console.WriteLine("  7. Exit Game");
+
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("\n> ");
+                Console.Write("\nSelect: ");
                 Console.ResetColor();
 
-                var input = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(input))
+                var choice = Console.ReadLine()?.Trim();
+                switch (choice)
                 {
-                    continue;
-                }
-
-                var command = input.Trim().ToLowerInvariant();
-
-                switch (command)
-                {
-                    case "help":
-                        ShowHelp();
-                        break;
-
-                    case "stats":
+                    case "1":
                         ShowStats();
                         break;
 
-                    case "hunt":
-                        RunSimpleHunt();
+                    case "2":
+                        InventoryMenu();
                         break;
 
-                    case "clear":
-                        Console.Clear();
+                    case "3":
+                        ShopMenu();
                         break;
 
-                    case "exit":
-                    case "quit":
-                        WriteSystemMessage("Exiting to title screen...");
+                    case "4":
+                        QuestsMenu();
+                        break;
+
+                    case "5":
+                        EnterDungeon();
+                        break;
+
+                    case "6":
+                        SaveLoadService.Save(_player);
+                        SystemMessageService.System("Game saved to Data/savegame.json");
+                        break;
+
+                    case "7":
+                        SystemMessageService.System("Exiting to title screen...");
                         return;
 
                     default:
-                        WriteHint("Unknown command. Type 'help' for a list of commands.");
+                        SystemMessageService.Hint("Invalid option.");
                         break;
                 }
             }
         }
 
-        private void ShowHelp()
+        private static void SafeClear()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\n=== Available Commands ===");
-            Console.ResetColor();
-            Console.WriteLine("  help   - Show this list of commands.");
-            Console.WriteLine("  stats  - View your current level and core stats.");
-            Console.WriteLine("  hunt   - Enter a quick fight against a random enemy.");
-            Console.WriteLine("  clear  - Clear the console window.");
-            Console.WriteLine("  exit   - Return to the title screen.");
+            try
+            {
+                Console.Clear();
+            }
+            catch (IOException)
+            {
+            }
         }
 
         private void ShowStats()
@@ -97,101 +108,281 @@ namespace ConsoleRPG.Core
             Console.ResetColor();
             Console.WriteLine($"  Name : {_player.Name}");
             Console.WriteLine($"  Level: {_player.Level} (XP: {_player.XP})");
-            Console.WriteLine($"  HP   : {_player.HP}/{_player.MaxHP}");
-            Console.WriteLine($"  MP   : {_player.MP}/{_player.MaxMP}");
+            Console.WriteLine($"  Gold : {_player.Gold}");
+            Console.WriteLine($"  HP   : {Bar(_player.HP, _player.MaxHP)} {_player.HP}/{_player.MaxHP}");
+            Console.WriteLine($"  MP   : {Bar(_player.MP, _player.MaxMP)} {_player.MP}/{_player.MaxMP}");
             Console.WriteLine($"  STR  : {_player.Strength}");
             Console.WriteLine($"  AGI  : {_player.Agility}");
             Console.WriteLine($"  INT  : {_player.Intelligence}");
             Console.WriteLine($"  DEF  : {_player.Defense}");
+            Console.WriteLine($"  Shadows: {_player.Shadows.Count}");
         }
 
-        /// <summary>
-        /// Very small guided combat encounter.
-        /// This is meant to give you an immediate, visible gameplay loop:
-        /// - Player and Enemy take turns attacking until one is defeated.
-        /// - Uses CombatService so you can later plug in more complex math.
-        /// </summary>
-        private void RunSimpleHunt()
+        private void InventoryMenu()
         {
-            var enemy = CreateRandomEnemyForPlayer();
+            while (true)
+            {
+                Console.WriteLine("\n=== Inventory ===");
+                if (_player.Inventory.Items.Count == 0)
+                {
+                    Console.WriteLine("  (empty)");
+                }
+                else
+                {
+                    for (int i = 0; i < _player.Inventory.Items.Count; i++)
+                    {
+                        var item = _player.Inventory.Items[i];
+                        Console.WriteLine($"  {i + 1}. {item.Name} (Value: {item.Value}g)");
+                    }
+                }
 
+                Console.WriteLine("\n  U <#>  - Use item");
+                Console.WriteLine("  B      - Back");
+                Console.Write("> ");
+
+                var input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    continue;
+                }
+
+                if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
+                {
+                    return;
+                }
+
+                if (input.StartsWith("u", StringComparison.OrdinalIgnoreCase))
+                {
+                    var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
+                    {
+                        SystemMessageService.Hint("Usage: U <#>");
+                        continue;
+                    }
+
+                    if (!_player.Inventory.UseItem(idx - 1, _player))
+                    {
+                        SystemMessageService.Hint("Invalid item number.");
+                        continue;
+                    }
+
+                    SystemMessageService.Success("Item used.");
+                }
+            }
+        }
+
+        private void ShopMenu()
+        {
+            while (true)
+            {
+                Console.WriteLine("\n=== Shop ===");
+                Console.WriteLine($"Gold: {_player.Gold}");
+                if (_shop.Stock.Count == 0)
+                {
+                    Console.WriteLine("  (sold out)");
+                }
+                else
+                {
+                    for (int i = 0; i < _shop.Stock.Count; i++)
+                    {
+                        var item = _shop.Stock[i];
+                        Console.WriteLine($"  {i + 1}. {item.Name} - {item.Value}g");
+                    }
+                }
+
+                Console.WriteLine("\n  B      - Back");
+                Console.WriteLine("  Buy <#> - Buy item");
+                Console.Write("> ");
+                var input = Console.ReadLine()?.Trim();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    continue;
+                }
+
+                if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
+                {
+                    return;
+                }
+
+                if (input.StartsWith("buy", StringComparison.OrdinalIgnoreCase))
+                {
+                    var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
+                    {
+                        SystemMessageService.Hint("Usage: Buy <#>");
+                        continue;
+                    }
+
+                    var ok = _shop.TryBuy(_player, idx - 1);
+                    if (!ok)
+                    {
+                        SystemMessageService.Warning("Purchase failed (invalid item or not enough gold).");
+                        continue;
+                    }
+
+                    SystemMessageService.Success("Purchased!");
+                }
+            }
+        }
+
+        private void QuestsMenu()
+        {
+            Console.WriteLine("\n=== Quests ===");
+            if (_player.ActiveQuests.Count == 0)
+            {
+                Console.WriteLine("  (no active quests)");
+            }
+            else
+            {
+                foreach (var q in _player.ActiveQuests)
+                {
+                    Console.WriteLine($"  - {q.Title}: {q.Description}");
+                }
+            }
+
+            Console.WriteLine("\nCompleted:");
+            if (_player.CompletedQuests.Count == 0)
+            {
+                Console.WriteLine("  (none)");
+            }
+            else
+            {
+                foreach (var q in _player.CompletedQuests)
+                {
+                    Console.WriteLine($"  - {q.Title}");
+                }
+            }
+        }
+
+        private void EnterDungeon()
+        {
+            var gate = GateGenerationService.Generate(_player);
+            SystemMessageService.System($"A Gate has appeared: {gate.Name} (Recommended Lv {gate.RecommendedLevel})");
+
+            // Fight through waves
+            while (_player.IsAlive)
+            {
+                var enemy = gate.DequeueNextEnemy();
+                if (enemy is null)
+                {
+                    break;
+                }
+
+                SystemMessageService.Warning($"Wave encounter: {enemy.Name}");
+                RunCombat(enemy);
+            }
+
+            // Boss
+            if (_player.IsAlive)
+            {
+                SystemMessageService.Warning($"Boss encounter: {gate.Boss.Name}!");
+                RunCombat(gate.Boss);
+                if (_player.IsAlive)
+                {
+                    gate.ClearDungeon();
+                }
+            }
+
+            if (!_player.IsAlive)
+            {
+                SystemMessageService.Error("You were defeated... The System restores your health.");
+                _player.Heal(_player.MaxHP);
+            }
+        }
+
+        private void RunCombat(Enemy enemy)
+        {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"\nA wild {enemy.Name} (Lv {enemy.Level}) appears!");
+            Console.WriteLine($"\nEnemy: {enemy.Name} (Lv {enemy.Level}) HP {enemy.HP}/{enemy.MaxHP}");
             Console.ResetColor();
 
             while (_player.IsAlive && enemy.IsAlive)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\n[COMBAT] Choose action: (a)ttack  (s)tats  (r)un");
+                Console.WriteLine("\n[COMBAT] 1) Attack  2) Use Item  3) Retreat");
                 Console.ResetColor();
                 Console.Write("> ");
-                var action = Console.ReadLine()?.Trim().ToLowerInvariant();
-
+                var action = Console.ReadLine()?.Trim();
                 if (string.IsNullOrWhiteSpace(action))
                 {
                     continue;
                 }
 
-                if (action.StartsWith("r"))
+                if (action == "3")
                 {
-                    WriteHint("You retreat from the fight and return to the city.");
+                    SystemMessageService.Hint("You retreated from the gate.");
                     return;
                 }
 
-                if (action.StartsWith("s"))
+                if (action == "2")
                 {
-                    ShowStats();
-                    continue;
-                }
+                    if (_player.Inventory.Items.Count == 0)
+                    {
+                        SystemMessageService.Hint("No items.");
+                        continue;
+                    }
 
-                // --- Player turn ---
-                var playerResult = CombatService.CalculatePlayerPhysicalDamage(_player, enemy);
-                ResolveDamage(playerResult, enemy, _player);
+                    Console.Write("Use item #: ");
+                    var num = Console.ReadLine();
+                    if (!int.TryParse(num, out var idx) || !_player.Inventory.UseItem(idx - 1, _player))
+                    {
+                        SystemMessageService.Hint("Invalid item number.");
+                        continue;
+                    }
+
+                    SystemMessageService.Success("Item used.");
+                }
+                else
+                {
+                    var playerResult = CombatService.CalculatePlayerPhysicalDamage(_player, enemy);
+                    ResolveDamage(playerResult, enemy);
+                }
 
                 if (!enemy.IsAlive)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nYou defeated {enemy.Name}!");
-                    Console.ResetColor();
+                    _lastDefeatedEnemy = enemy;
 
-                    var xpGained = 25 + enemy.Level * 10;
-                    _player.GainXP(xpGained);
+                    var xp = 25 + enemy.Level * 10;
+                    var gold = 10 + enemy.Level * 3;
 
-                    WriteSystemMessage($"+{xpGained} XP gained.");
+                    _player.GainXP(xp);
+                    _player.AddGold(gold);
+
+                    SystemMessageService.Success($"Defeated {enemy.Name}! +{xp} XP, +{gold}g");
+                    _quests.NotifyEnemyDefeated(_player, enemy);
+
+                    OfferExtraction(enemy);
                     return;
                 }
 
-                // --- Enemy turn ---
                 var enemyResult = CombatService.CalculateEnemyPhysicalDamage(enemy, _player);
-                ResolveDamage(enemyResult, _player, enemy);
-
-                if (!_player.IsAlive)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nYou were defeated...");
-                    Console.ResetColor();
-                    WriteSystemMessage("The System will restore you to full health for now.");
-                    _player.Heal(_player.MaxHP);
-                    return;
-                }
+                ResolveDamage(enemyResult, _player);
             }
         }
 
-        private Enemy CreateRandomEnemyForPlayer()
+        private void OfferExtraction(Enemy defeatedEnemy)
         {
-            // Very small pool of enemies for now.
-            var enemyLevel = Math.Max(1, _player.Level);
-            var roll = _rng.Next(0, 3);
-
-            return roll switch
+            Console.WriteLine("\nArise? (type 'arise' to attempt extraction, or press Enter to skip)");
+            Console.Write("> ");
+            var input = Console.ReadLine()?.Trim();
+            if (!string.Equals(input, "arise", StringComparison.OrdinalIgnoreCase))
             {
-                0 => new Goblin("Goblin Scout", enemyLevel),
-                1 => new Skeleton("Skeleton Soldier", enemyLevel),
-                _ => new WildWolf("Wild Wolf", enemyLevel),
-            };
+                return;
+            }
+
+            for (int attempt = 1; attempt <= 3; attempt++)
+            {
+                if (ShadowExtractionService.TryExtract(_player, defeatedEnemy, out var shadow) && shadow is not null)
+                {
+                    SystemMessageService.System($"Extraction successful. {shadow.Name} has joined your Shadow Army.");
+                    return;
+                }
+
+                SystemMessageService.Warning($"Extraction failed. ({attempt}/3)");
+            }
         }
 
-        private static void ResolveDamage(CombatResult result, IEntity defender, IEntity attacker)
+        private static void ResolveDamage(CombatResult result, IEntity defender)
         {
             if (!result.IsHit)
             {
@@ -201,7 +392,6 @@ namespace ConsoleRPG.Core
                 return;
             }
 
-            // Defender here is either Player or Enemy; we want to apply final damage directly.
             defender.HP -= result.DamageDealt;
             if (defender.HP < 0)
             {
@@ -216,18 +406,17 @@ namespace ConsoleRPG.Core
             Console.ResetColor();
         }
 
-        private static void WriteSystemMessage(string message)
+        private static string Bar(int current, int max, int width = 20)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"[SYSTEM] {message}");
-            Console.ResetColor();
-        }
+            if (max <= 0)
+            {
+                return "[--------------------]";
+            }
 
-        private static void WriteHint(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine($"[Hint] {message}");
-            Console.ResetColor();
+            current = Math.Clamp(current, 0, max);
+            var filled = (int)Math.Round((double)current / max * width);
+            filled = Math.Clamp(filled, 0, width);
+            return "[" + new string('█', filled) + new string('-', width - filled) + "]";
         }
     }
 }

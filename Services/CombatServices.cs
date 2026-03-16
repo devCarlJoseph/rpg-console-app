@@ -41,7 +41,7 @@ namespace ConsoleRPG.Services
 
             result.IsHit = true;
 
-            // BASE DAMAGE
+            // BASE DAMAGE (weapon already contributes to Player.Strength when equipped)
             int rawDamage = attacker.Strength + flatBonus;
 
             // CRIT CHECK

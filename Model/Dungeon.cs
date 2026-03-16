@@ -38,16 +38,24 @@ namespace ConsoleRPG.Model
       Console.WriteLine($"You have cleared {Name}.");
     }
 
-    public void GetNextEnemy()
+    public Enemy? PeekNextEnemy()
     {
       if (_enemyWaves.Count == 0)
       {
-        ClearDungeon();
-        return;
+        return null;
       }
 
-      Enemy nextEnemy = _enemyWaves.Dequeue();
-      Console.WriteLine($"You have encountered {nextEnemy.Name}.");
+      return _enemyWaves.Peek();
+    }
+
+    public Enemy? DequeueNextEnemy()
+    {
+      if (_enemyWaves.Count == 0)
+      {
+        return null;
+      }
+
+      return _enemyWaves.Dequeue();
     }
 
     public void Battle(Player player, Enemy enemy)

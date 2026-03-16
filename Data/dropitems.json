@@ -1,0 +1,64 @@
+{
+    "DropItems": {
+        "ERankArmor": [
+            {
+                "Id": "droparm_001",
+                "name": "Goblin's Leather Armor",
+                "stats": {
+                    "DefenseBonus": 12,
+                    "HealthBonus": 8
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "droparm_002",
+                "name": "Wolf's Fur Cloak",
+                "stats": {
+                    "DefenseBonus": 15,
+                    "HealthBonus": 10
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "droparm_003",
+                "name": "Goblin's Cloak of Stealth",
+                "stats": {
+                    "DefenseBonus": 20,
+                    "MovementBonus": 10
+                },
+                "Rarity": "Common"
+            }
+        ],
+        "ERankHelmet": [
+            {
+                "Id": "drophelm_001",
+                "name": "Wolf Knight Helmet",
+                "stats": {
+                    "DefenseBonus": 10,
+                    "RegenBonus": 5
+                },
+                "Rarity": "Common"
+            },
+            {
+                "Id": "drophelm_002",
+                "name": "Wolves Pelt Helmet",
+                "stats": {
+                    "DefenseBonus": 8,
+                    "HealthBonus": 5,
+                    "ResistanceBonus": 10
+                },
+                "Rarity": "Common"
+            },
+            {
+               "Id": "drophelm_003",
+               "name": "Goblin's Helmet",
+               "stats": {
+                "DefenseBonus": 10,
+                "RegenBonus": 8
+               },
+               "Rarity": "Common"
+            }
+
+        ]
+    }
+}

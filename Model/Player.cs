@@ -8,12 +8,14 @@ namespace ConsoleRPG.Model
         public string Name { get; set; } // Player's name
         public int Level { get; private set; } = 1; //Player level starts at 1
         public int XP { get; private set; } = 0; // Experience points
+        public int Gold { get; private set; } = 0;
         public bool IsAlive => HP > 0;
 
         // --- Core Stats ---
         public int MaxHP { get; private set; } = 100; //Maximum HP
         public int HP { get; set; } //Current HP (needs public setter for IEntity)
         public int MaxMP { get; private set; } = 50; //Maximum Mana
+        public int EnergyPoints { get; private set; } = 50; //Maximum Energy Points
         public int MP { get; set; } // Current Mana
         public int Strength { get; private set; } = 10; // Physical attack power
         public int Agility { get; private set; } = 10; // Speed / Evasion
@@ -21,14 +23,15 @@ namespace ConsoleRPG.Model
         public int Defense { get; private set; } = 5; // Damage reduction
 
         // --- Collections & Equipment ---
-        public List<Item> Inventory { get; private set; } = new List<Item>();
+        public Inventory Inventory { get; private set; } = new Inventory();
         public List<Skill> ActiveSkills { get; private set; } = new List<Skill>();
         public List<Skill> PassiveSkills { get; private set; } = new List<Skill>();
         public List<Quest> ActiveQuests { get; private set; } = new List<Quest>();
-        public Weapon EquippedWeapon { get; private set; }
-        public Armor EquippedArmor { get; private set; }
-        public Accessory EquippedAccessory { get; private set; }
+        public Weapon? EquippedWeapon { get; private set; }
+        public Armor? EquippedArmor { get; private set; }
+        public Accessory? EquippedAccessory { get; private set; }
         public List<Quest> CompletedQuests { get; private set; } = new List<Quest>();
+        public List<Shadow> Shadows { get; private set; } = new List<Shadow>();
 
         // --- Constructor
         public Player(string name)
@@ -36,6 +39,7 @@ namespace ConsoleRPG.Model
             Name = name;
             HP = MaxHP;
             MP = MaxMP;
+            Gold = 50;
         }
 
         // --- Methods (Behaviors) ---
@@ -47,6 +51,7 @@ namespace ConsoleRPG.Model
             {
                 damageTaken = 0;
             }
+
             HP -= damageTaken;
             if (HP < 0)
             {
@@ -74,6 +79,8 @@ namespace ConsoleRPG.Model
             }
         }
 
+        public int XPToNextLevel => XPToLevelUp() - XP;
+
         // Handles leveling up: increases stats
         private void LevelUp()
         {
@@ -95,6 +102,31 @@ namespace ConsoleRPG.Model
             return 100 + (Level - 1) * 50;
         }
 
+        public void AddGold(int amount)
+        {
+            if (amount <= 0)
+            {
+                return;
+            }
+
+            Gold += amount;
+        }
+
+        public bool TrySpendGold(int amount)
+        {
+            if (amount <= 0)
+            {
+                return true;
+            }
+
+            if (Gold < amount)
+            {
+                return false;
+            }
+
+            Gold -= amount;
+            return true;
+        }
 
         // Equip methods (example for weapon)
         public void EquipWeapon(Weapon weapon)
@@ -134,6 +166,7 @@ namespace ConsoleRPG.Model
             {
                 damage += EquippedWeapon.AttackBonus;
             }
+
             Console.WriteLine($"{Name} attacks {target.Name} for {damage} damage!");
             target.TakeDamage(damage);
         }

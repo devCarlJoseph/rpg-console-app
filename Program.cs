@@ -23,7 +23,7 @@ namespace ConsoleRPG
 
         private static void ShowTitle()
         {
-            Console.Clear();
+            SafeClear();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(" ╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
@@ -100,7 +100,7 @@ namespace ConsoleRPG
         /// </summary>
         private static void StartGame()
         {
-            Console.Clear();
+            SafeClear();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("Enter your hunter's name: ");
             Console.ResetColor();
@@ -123,10 +123,30 @@ namespace ConsoleRPG
 
         private static void LoadGame()
         {
-            // Placeholder for the future Save/Load system.
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n[TODO] Load/Save system not implemented yet.");
-            Console.ResetColor();
+            var player = Services.SaveLoadService.Load();
+            if (player is null)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nNo save found at Data/savegame.json");
+                Console.ResetColor();
+                return;
+            }
+
+            SafeClear();
+            var engine = new GameEngine(player);
+            engine.Run();
+        }
+
+        private static void SafeClear()
+        {
+            try
+            {
+                Console.Clear();
+            }
+            catch (IOException)
+            {
+                // Some hosts (CI/IDE runners) have no console buffer.
+            }
         }
     }
 }

@@ -23,7 +23,13 @@ namespace ConsoleRPG.Model
 
         public override void Equip(Player player)
         {
-            // Later you can modify player stats here when equipping accessories.
+            player.IncreaseStrength(AttackBonus);
+            player.IncreaseDefense(DefenseBonus);
+        }
+
+        public override void Use(Player player)
+        {
+            Equip(player);
         }
     }
 }

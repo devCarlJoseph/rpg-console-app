@@ -20,8 +20,14 @@ namespace ConsoleRPG.Model
 
         public override void Equip(Player player)
         {
-            // You can later add logic to adjust player stats here.
-            // For now, this exists so Player.EquippedArmor can reference Armor.
+            // Minimal: apply defense bonus when equipped.
+            // (If you later add unequip logic, you can reverse this.)
+            player.IncreaseDefense(DefenseBonus);
+        }
+
+        public override void Use(Player player)
+        {
+            Equip(player);
         }
     }
 }

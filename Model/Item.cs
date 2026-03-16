@@ -1,7 +1,8 @@
+using ConsoleRPG.Interfaces;
+
 namespace ConsoleRPG.Model
 {
-
-    public abstract class Item
+    public abstract class Item : IItem
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -19,6 +20,8 @@ namespace ConsoleRPG.Model
             Rarity = rarity;
             LevelRequirement = levelRequirement;
         }
+
+        public abstract void Use(Player player);
     }
 
     public abstract class Equipment : Item
@@ -41,6 +44,11 @@ namespace ConsoleRPG.Model
         {
             player.EquipWeapon(this);
         }
+
+        public override void Use(Player player)
+        {
+            Equip(player);
+        }
     }
 
     public class Consumable : Item
@@ -51,6 +59,11 @@ namespace ConsoleRPG.Model
         {
             HealAmount = healAmount;
         }
+
+        public override void Use(Player player)
+        {
+            player.Heal(HealAmount);
+        }
     }
 
     public class Material : Item
@@ -60,6 +73,11 @@ namespace ConsoleRPG.Model
         : base(name, description, value, weight, rarity, levelRequirement)
         {
             StackSize = stackSize;
+        }
+
+        public override void Use(Player player)
+        {
+            // Materials are not directly usable for now.
         }
     }
 }

@@ -16,14 +16,14 @@ namespace ConsoleRPG.Model
         public int Defense { get; protected set; }
 
         // --- Constructor ---
-        public Enemy(string name, int Level)
+        public Enemy(string name, int level)
         {
             Name = name;
-            Level = Level;
-            MaxHP = 50 + (Level * 10);
+            Level = level;
+            MaxHP = 50 + (level * 10);
             HP = MaxHP;
-            Strength = 10 + (Level * 2);
-            Defense = 5 + Level;
+            Strength = 10 + (level * 2);
+            Defense = 5 + level;
         }
         // --- Methods ---
 

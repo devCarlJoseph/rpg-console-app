@@ -1,9 +1,10 @@
+using ConsoleRPG.Interfaces;
+
 namespace ConsoleRPG.Model
 {
-
-    public abstract class Quest
+    public abstract class Quest : IQuest
     {
-        // -- Basic Quest Inofrmation --
+        // -- Basic Quest Information --
         public string Id { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
@@ -29,12 +30,14 @@ namespace ConsoleRPG.Model
         public virtual void Complete(Player player)
         {
             if (IsCompleted)
+            {
                 return;
+            }
 
             IsCompleted = true;
 
             player.GainXP(RewardXP);
-            //player.AddGold(RewardGold);
+            player.AddGold(RewardGold);
 
             Console.WriteLine($"Quest Completed: {Title}");
             Console.WriteLine($"Rewards: {RewardXP} XP, {RewardGold} Gold");
