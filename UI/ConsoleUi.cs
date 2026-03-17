@@ -56,13 +56,13 @@ namespace ConsoleRPG.UI
 
         public static void Hud(ConsoleRPG.Model.Player player, string? location = null)
         {
-            const int innerWidth = 78;
+            const int innerWidth = 79;
             BoxLineTop(innerWidth);
 
             // Title line
             Console.Write("║ ");
             Console.ForegroundColor = Theme.HeaderColor;
-            var title = "RPG GAME";
+            var title = "Jerreh: Leveling Beyon Limits";
             Console.Write(title);
             Console.ResetColor();
             var loc = string.IsNullOrWhiteSpace(location) ? string.Empty : $"  |  {location}";

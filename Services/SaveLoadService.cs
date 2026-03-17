@@ -9,7 +9,7 @@ namespace ConsoleRPG.Services
 
         private sealed class SaveData
         {
-            public string Name { get; set; } = "Jinwoo";
+            public string Name { get; set; } = "Jerreh";
             public int Level { get; set; } = 1;
             public int XP { get; set; } = 0;
             public int Gold { get; set; } = 0;

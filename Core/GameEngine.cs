@@ -74,8 +74,6 @@ namespace ConsoleRPG.Core
             }
         }
 
-        // UI is implemented in the UI folder (InventoryView, ShopView, QuestBoardView, etc.)
-
         private void EnterDungeon()
         {
             var db = DungeonDataService.Load();
@@ -197,7 +195,7 @@ namespace ConsoleRPG.Core
                         enemy.TakeDamage(raw);
                         log = $"You cast a magic blast for {raw} damage. (-{mpCost} MP)";
                     }
-                    else // Skill
+                    else
                     {
                         var skill = CombatView.PromptSkill(_player);
                         if (skill is null)
@@ -212,7 +210,6 @@ namespace ConsoleRPG.Core
                             continue;
                         }
 
-                        // Skill handles its own MP + damage; we just show a clean log line.
                         var beforeHp = enemy.HP;
                         var beforeMp = _player.MP;
                         skill.Execute(_player, enemy);
@@ -287,7 +284,6 @@ namespace ConsoleRPG.Core
             }
         }
 
-        // Status bar is implemented in PlayerStatusView
     }
 }
 
