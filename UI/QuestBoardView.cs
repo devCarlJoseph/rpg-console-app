@@ -12,7 +12,7 @@ namespace ConsoleRPG.UI
             ConsoleUi.SafeClear();
             ConsoleUi.Hud(player, "Quest Board");
             ConsoleUi.BoxHeader("QUEST BOARD", InnerWidth);
-            ConsoleUi.BoxText(InnerWidth, "Available (from Data/quests.json):", ConsoleUi.Theme.HintColor);
+            ConsoleUi.BoxText(InnerWidth, "Available Quests:", ConsoleUi.Theme.HintColor);
             ConsoleUi.BoxLineSep(InnerWidth);
             var defs = quests.GetAllQuestDefinitions();
             if (defs.Count == 0)

@@ -87,7 +87,7 @@ namespace ConsoleRPG.UI
             var name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = "Jinwoo";
+                name = "Jerreh";
             }
 
             return new Player(name);

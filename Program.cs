@@ -37,7 +37,7 @@ namespace ConsoleRPG
                         if (player is null)
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("\nNo save found at Data/savegame.json");
+                            Console.WriteLine("\nNo Save Games");
                             Console.ResetColor();
                             break;
                         }
