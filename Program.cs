@@ -15,6 +15,9 @@ namespace ConsoleRPG
     /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Displays the title screen, then loops through the start menu until the player exits the program.
+        /// </summary>
         private static void Main(string[] args)
         {
             StartMenu.ShowTitle();

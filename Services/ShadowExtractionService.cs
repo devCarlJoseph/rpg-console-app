@@ -2,10 +2,17 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
+    /// <summary>
+    /// Handles RNG-based extraction of shadows from defeated enemies.
+    /// </summary>
     public static class ShadowExtractionService
     {
         private static readonly Random Rng = new();
 
+        /// <summary>
+        /// Attempts a single extraction roll and returns a shadow if successful.
+        /// Does not mutate player state; caller must add the shadow/skill.
+        /// </summary>
         public static bool TryExtract(Player player, Enemy defeatedEnemy, out Shadow? shadow)
         {
             shadow = null;
@@ -24,19 +31,6 @@ namespace ConsoleRPG.Services
                 level: defeatedEnemy.Level,
                 strength: Math.Max(1, defeatedEnemy.Strength / 2),
                 defense: Math.Max(0, defeatedEnemy.Defense / 2));
-
-            player.Shadows.Add(shadow);
-
-            // Also grant a usable combat skill for this shadow.
-            // Prevent duplicates by name.
-            var skillName = $"Shadow: {shadow.Name}";
-            var alreadyHas = player.ActiveSkills
-                .OfType<ActiveSkill>()
-                .Any(s => s.Name.Equals(skillName, StringComparison.OrdinalIgnoreCase));
-            if (!alreadyHas)
-            {
-                player.ActiveSkills.Add(new ShadowStrikeSkill(shadow));
-            }
 
             return true;
         }

@@ -3,12 +3,19 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
+    /// <summary>
+    /// Serializes and deserializes player progress to JSON files.
+    /// </summary>
     public static class SaveLoadService
     {
         private const string DefaultSavePath = "Data/savegame.json";
 
+        /// <summary>
+        /// DTO used to persist player state.
+        /// </summary>
         private sealed class SaveData
         {
+            public int Id { get; set; }
             public string Name { get; set; } = "Jerreh";
             public int Level { get; set; } = 1;
             public int XP { get; set; } = 0;
@@ -28,6 +35,9 @@ namespace ConsoleRPG.Services
             public List<string> ShadowNames { get; set; } = new();
         }
 
+        /// <summary>
+        /// Writes the player's current state to disk.
+        /// </summary>
         public static void Save(Player player, string? path = null)
         {
             path ??= DefaultSavePath;
@@ -56,6 +66,9 @@ namespace ConsoleRPG.Services
             File.WriteAllText(path, json);
         }
 
+        /// <summary>
+        /// Loads a player from disk if a save exists; otherwise returns null.
+        /// </summary>
         public static Player? Load(string? path = null)
         {
             path ??= DefaultSavePath;
@@ -111,18 +124,27 @@ namespace ConsoleRPG.Services
             return player;
         }
 
+        /// <summary>
+        /// Minimal consumable model used when recreating inventory from save data.
+        /// </summary>
         private sealed class SimpleConsumable : Interfaces.IItem
         {
             public string Name { get; }
             public int Value => 5;
             private readonly int _heal;
 
+            /// <summary>
+            /// Creates a simple heal item with a fixed heal amount.
+            /// </summary>
             public SimpleConsumable(string name, int heal)
             {
                 Name = name;
                 _heal = heal;
             }
 
+            /// <summary>
+            /// Restores hit points to the player when used.
+            /// </summary>
             public void Use(Player player)
             {
                 player.Heal(_heal);

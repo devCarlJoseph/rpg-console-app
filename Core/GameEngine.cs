@@ -22,11 +22,17 @@ namespace ConsoleRPG.Core
         private readonly ShopService _shop = new();
         private readonly QuestManager _quests = new();
 
+        /// <summary>
+        /// Initializes the engine with the active player state.
+        /// </summary>
         public GameEngine(Player player)
         {
             _player = player;
         }
 
+        /// <summary>
+        /// Main game loop that routes menu selections until exit.
+        /// </summary>
         public void Run()
         {
             ConsoleUi.SafeClear();
@@ -74,6 +80,9 @@ namespace ConsoleRPG.Core
             }
         }
 
+        /// <summary>
+        /// Drives the dungeon selection, combat waves, and reward distribution.
+        /// </summary>
         private void EnterDungeon()
         {
             var db = DungeonDataService.Load();
@@ -134,6 +143,9 @@ namespace ConsoleRPG.Core
             }
         }
 
+        /// <summary>
+        /// Runs a single encounter until someone retreats or is defeated.
+        /// </summary>
         private void RunCombat(Enemy enemy)
         {
             string? log = null;
@@ -156,8 +168,24 @@ namespace ConsoleRPG.Core
                         continue;
                     }
 
-                    var ok = _player.Inventory.UseItem(idx.Value, _player);
-                    log = ok ? "Item used." : "Invalid item selection.";
+                    var itemIndex = idx.Value;
+                    if (itemIndex < 0 || itemIndex >= _player.Inventory.Items.Count)
+                    {
+                        log = "Invalid item selection.";
+                        continue;
+                    }
+
+                    var item = _player.Inventory.Items[itemIndex];
+                    var ok = _player.Inventory.UseItem(itemIndex, _player);
+                    if (ok)
+                    {
+                        ItemUseView.Show("Item Used", _player, item);
+                        log = $"Used {item.Name}.";
+                    }
+                    else
+                    {
+                        log = "Invalid item selection.";
+                    }
                 }
                 else if (action == CombatView.CombatAction.Regenerate)
                 {
@@ -232,7 +260,7 @@ namespace ConsoleRPG.Core
                     _player.GainXP(xp);
                     _player.AddGold(gold);
 
-                    SystemMessageService.Success($"Defeated {enemy.Name}! +{xp} XP, +{gold}g");
+                    CombatOutcomeView.ShowVictory(_player, enemy, xp, gold, log);
                     _quests.NotifyEnemyDefeated(_player, enemy);
 
                     OfferExtraction(enemy);
@@ -243,8 +271,16 @@ namespace ConsoleRPG.Core
                 var enemyLine = ApplyDamageAndDescribe(enemyResult, _player);
                 log = string.IsNullOrWhiteSpace(log) ? enemyLine : (log + "  |  " + enemyLine);
             }
+
+            if (!_player.IsAlive)
+            {
+                CombatOutcomeView.ShowDefeat(_player, enemy);
+            }
         }
 
+        /// <summary>
+        /// Applies computed combat damage and returns a short description string.
+        /// </summary>
         private static string ApplyDamageAndDescribe(CombatResult result, IEntity defender)
         {
             if (!result.IsHit)
@@ -262,25 +298,42 @@ namespace ConsoleRPG.Core
             return $"{result.Source} deals {result.DamageDealt} damage{critText}.";
         }
 
+        /// <summary>
+        /// Prompts the player to attempt a shadow extraction after victory.
+        /// </summary>
         private void OfferExtraction(Enemy defeatedEnemy)
         {
-            Console.WriteLine("\nArise? (type 'arise' to attempt extraction, or press Enter to skip)");
-            Console.Write("> ");
-            var input = Console.ReadLine()?.Trim();
-            if (!string.Equals(input, "arise", StringComparison.OrdinalIgnoreCase))
-            {
+            const int maxAttempts = 3;
+            if (!CombatOutcomeView.PromptExtraction())
                 return;
-            }
 
-            for (int attempt = 1; attempt <= 3; attempt++)
+            for (int attempt = 1; attempt <= maxAttempts; attempt++)
             {
                 if (ShadowExtractionService.TryExtract(_player, defeatedEnemy, out var shadow) && shadow is not null)
                 {
-                    SystemMessageService.System($"Extraction successful. {shadow.Name} has joined your Shadow Army.");
+                    AddShadowToPlayer(shadow);
+                    CombatOutcomeView.ShowExtractionResult(true, attempt, maxAttempts, shadow);
                     return;
                 }
 
-                SystemMessageService.Warning($"Extraction failed. ({attempt}/3)");
+                CombatOutcomeView.ShowExtractionResult(false, attempt, maxAttempts, null);
+            }
+        }
+
+        /// <summary>
+        /// Adds a new shadow to the player and grants its combat skill if missing.
+        /// </summary>
+        private void AddShadowToPlayer(Shadow shadow)
+        {
+            _player.Shadows.Add(shadow);
+
+            var skillName = $"Shadow: {shadow.Name}";
+            var alreadyHas = _player.ActiveSkills
+                .OfType<ActiveSkill>()
+                .Any(s => s.Name.Equals(skillName, StringComparison.OrdinalIgnoreCase));
+            if (!alreadyHas)
+            {
+                _player.ActiveSkills.Add(new ShadowStrikeSkill(shadow));
             }
         }
 

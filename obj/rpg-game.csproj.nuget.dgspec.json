@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Carl Files\\rpg-game\\rpg-game.csproj": {}
+    "D:\\Carl Files\\rpg-console-app\\rpg-game.csproj": {}
   },
   "projects": {
-    "D:\\Carl Files\\rpg-game\\rpg-game.csproj": {
+    "D:\\Carl Files\\rpg-console-app\\rpg-game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Carl Files\\rpg-game\\rpg-game.csproj",
+        "projectUniqueName": "D:\\Carl Files\\rpg-console-app\\rpg-game.csproj",
         "projectName": "rpg-game",
-        "projectPath": "D:\\Carl Files\\rpg-game\\rpg-game.csproj",
+        "projectPath": "D:\\Carl Files\\rpg-console-app\\rpg-game.csproj",
         "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
-        "outputPath": "D:\\Carl Files\\rpg-game\\obj\\",
+        "outputPath": "D:\\Carl Files\\rpg-console-app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config"

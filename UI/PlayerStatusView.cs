@@ -2,10 +2,16 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.UI
 {
+    /// <summary>
+    /// Shows a snapshot of the player's stats, resources, and shadows.
+    /// </summary>
     public static class PlayerStatusView
     {
         private const int InnerWidth = 56;
 
+        /// <summary>
+        /// Renders the status screen and waits for the user to return.
+        /// </summary>
         public static void Show(Player player)
         {
             ConsoleUi.SafeClear();
@@ -29,6 +35,9 @@ namespace ConsoleRPG.UI
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Builds a progress bar string for HP/MP display.
+        /// </summary>
         private static string Bar(int current, int max, int width = 20)
         {
             if (max <= 0)

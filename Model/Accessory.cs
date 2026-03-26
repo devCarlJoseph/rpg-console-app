@@ -1,11 +1,16 @@
 namespace ConsoleRPG.Model
 {
-    // Basic Accessory model used by Player. Expand with more fields later.
+    /// <summary>
+    /// Accessory that grants both attack and defense bonuses.
+    /// </summary>
     public class Accessory : Equipment
     {
         public int AttackBonus { get; private set; }
         public int DefenseBonus { get; private set; }
 
+        /// <summary>
+        /// Creates an accessory with dual bonuses.
+        /// </summary>
         public Accessory(
             string name,
             string description,
@@ -21,12 +26,18 @@ namespace ConsoleRPG.Model
             DefenseBonus = defenseBonus;
         }
 
+        /// <summary>
+        /// Applies attack and defense bonuses when equipped.
+        /// </summary>
         public override void Equip(Player player)
         {
             player.IncreaseStrength(AttackBonus);
             player.IncreaseDefense(DefenseBonus);
         }
 
+        /// <summary>
+        /// Uses the accessory by equipping it.
+        /// </summary>
         public override void Use(Player player)
         {
             Equip(player);

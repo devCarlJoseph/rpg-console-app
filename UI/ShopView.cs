@@ -3,6 +3,9 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.UI
 {
+    /// <summary>
+    /// Renders the shop screen, allowing filtering and purchasing items.
+    /// </summary>
     public static class ShopView
     {
         private const int WIndex = 3;
@@ -10,6 +13,9 @@ namespace ConsoleRPG.UI
         private const int WPrice = 8;
         private const int WInfo = 18;
 
+        /// <summary>
+        /// Main shop loop; lets players filter categories and buy items.
+        /// </summary>
         public static void Show(ShopService shop, Player player)
         {
             while (true)
@@ -134,6 +140,9 @@ namespace ConsoleRPG.UI
             }
         }
 
+        /// <summary>
+        /// Shows the category selector and current gold.
+        /// </summary>
         private static void RenderCategoryMenu(int gold)
         {
             const int innerWidth = 46;
@@ -161,6 +170,9 @@ namespace ConsoleRPG.UI
             WriteBoxLineBottom(innerWidth);
         }
 
+        /// <summary>
+        /// Writes the table header for the visible stock listing.
+        /// </summary>
         private static void RenderItemsTableHeader()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -184,6 +196,9 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Prints a placeholder row when no items match the filter.
+        /// </summary>
         private static void RenderEmptyItemsRow()
         {
             var msg = "(No items in this category)";
@@ -193,6 +208,9 @@ namespace ConsoleRPG.UI
             Console.WriteLine("║");
         }
 
+        /// <summary>
+        /// Renders one item row with icon, name, price, and rarity/info.
+        /// </summary>
         private static void RenderItemRow(int idx, string icon, string name, int value, string rarity, string info)
         {
             Console.Write("║");
@@ -218,6 +236,9 @@ namespace ConsoleRPG.UI
             Console.WriteLine("║");
         }
 
+        /// <summary>
+        /// Writes the bottom border of the stock table.
+        /// </summary>
         private static void RenderItemsTableFooter()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -225,6 +246,9 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Colors rarity text and pads it to the requested width.
+        /// </summary>
         private static void WriteRarity(string text, string rarity, int width)
         {
             Console.Write(" ");
@@ -242,8 +266,14 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Pads text to a fixed width for aligned columns.
+        /// </summary>
         private static string Pad(string s, int width) => s.Length >= width ? s : s + new string(' ', width - s.Length);
 
+        /// <summary>
+        /// Truncates text and appends an ellipsis when it exceeds the width.
+        /// </summary>
         private static string Truncate(string s, int width)
         {
             if (width <= 0)
@@ -259,6 +289,9 @@ namespace ConsoleRPG.UI
             return width <= 1 ? s[..width] : s[..(width - 1)] + "…";
         }
 
+        /// <summary>
+        /// Draws the top border for a boxed block.
+        /// </summary>
         private static void WriteBoxLineTop(int innerWidth)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -266,6 +299,9 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Draws a separator line inside a boxed block.
+        /// </summary>
         private static void WriteBoxLineSep(int innerWidth)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -273,6 +309,9 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Draws the bottom border for a boxed block.
+        /// </summary>
         private static void WriteBoxLineBottom(int innerWidth)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -280,11 +319,17 @@ namespace ConsoleRPG.UI
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Prints an empty interior line for boxed blocks.
+        /// </summary>
         private static void WriteBoxBlank(int innerWidth)
         {
             Console.WriteLine("║ " + new string(' ', innerWidth) + " ║");
         }
 
+        /// <summary>
+        /// Centers a title inside a boxed header line.
+        /// </summary>
         private static void WriteBoxTitle(int innerWidth, string title, ConsoleColor titleColor)
         {
             var content = $" {title} ";
@@ -305,6 +350,9 @@ namespace ConsoleRPG.UI
             Console.WriteLine(" ║");
         }
 
+        /// <summary>
+        /// Writes a colored text line inside a boxed block.
+        /// </summary>
         private static void WriteBoxText(int innerWidth, string text, ConsoleColor color)
         {
             text = text.Length > innerWidth ? Truncate(text, innerWidth) : text;

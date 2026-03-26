@@ -1,9 +1,15 @@
 namespace ConsoleRPG.UI
 {
+    /// <summary>
+    /// Displays the top-level navigation menu for the game loop.
+    /// </summary>
     public static class MainMenuView
     {
         private const int InnerWidth = 46;
 
+        /// <summary>
+        /// Menu options the player can choose.
+        /// </summary>
         public enum MainMenuChoice
         {
             Status,
@@ -16,6 +22,9 @@ namespace ConsoleRPG.UI
             Invalid
         }
 
+        /// <summary>
+        /// Renders the main menu UI and returns the player's chosen action.
+        /// </summary>
         public static MainMenuChoice Show(ConsoleRPG.Model.Player player)
         {
             ConsoleUi.SafeClear();
