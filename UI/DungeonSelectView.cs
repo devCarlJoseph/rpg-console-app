@@ -2,10 +2,16 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.UI
 {
+    /// <summary>
+    /// Provides the gate/dungeon rank selection flow.
+    /// </summary>
     public static class DungeonSelectView
     {
         private const int InnerWidth = 56;
 
+        /// <summary>
+        /// Lets the player choose a dungeon rank and specific dungeon, returning the chosen definition.
+        /// </summary>
         public static DungeonDataService.DungeonDefinition? ChooseDungeon(DungeonDataService.DungeonDb db)
         {
             ConsoleUi.SafeClear();
@@ -50,7 +56,7 @@ namespace ConsoleRPG.UI
             for (int i = 0; i < list.Count; i++)
             {
                 var d = list[i];
-                var line = $"[{i + 1}] {d.Name}  ({d.Id})";
+                var line = $"[{i + 1}] {d.Name}";
                 ConsoleUi.BoxText(InnerWidth, ConsoleUi.Truncate(line, InnerWidth));
             }
             ConsoleUi.BoxLineSep(InnerWidth);

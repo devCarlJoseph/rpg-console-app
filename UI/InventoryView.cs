@@ -3,10 +3,16 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.UI
 {
+    /// <summary>
+    /// Screen for viewing and consuming items in the player's inventory.
+    /// </summary>
     public static class InventoryView
     {
         private const int InnerWidth = 66;
 
+        /// <summary>
+        /// Loops over inventory interactions until the player chooses to leave.
+        /// </summary>
         public static void Show(Player player)
         {
             while (true)
@@ -61,13 +67,21 @@ namespace ConsoleRPG.UI
                         continue;
                     }
 
-                    if (!player.Inventory.UseItem(idx - 1, player))
+                    var itemIndex = idx - 1;
+                    if (itemIndex < 0 || itemIndex >= player.Inventory.Items.Count)
                     {
                         SystemMessageService.Hint("Invalid item number.");
                         continue;
                     }
 
-                    SystemMessageService.Success("Item used.");
+                    var item = player.Inventory.Items[itemIndex];
+                    if (!player.Inventory.UseItem(itemIndex, player))
+                    {
+                        SystemMessageService.Hint("Invalid item number.");
+                        continue;
+                    }
+
+                    ItemUseView.Show("Item Used", player, item);
                 }
             }
         }

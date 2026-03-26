@@ -2,8 +2,14 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
+    /// <summary>
+    /// Translates dungeon definitions into concrete raid plans with instantiated enemies.
+    /// </summary>
     public static class DungeonRaidService
     {
+        /// <summary>
+        /// Aggregates all details needed to run a dungeon raid.
+        /// </summary>
         public sealed class RaidPlan
         {
             public string DungeonId { get; init; } = string.Empty;
@@ -15,6 +21,9 @@ namespace ConsoleRPG.Services
             public List<string> QuestIds { get; init; } = new();
         }
 
+        /// <summary>
+        /// Builds a raid plan from a dungeon definition, instantiating wave enemies and boss.
+        /// </summary>
         public static RaidPlan BuildRaid(DungeonDataService.DungeonDefinition def)
         {
             var enemyDb = EnemyDataService.Load();
@@ -57,13 +66,22 @@ namespace ConsoleRPG.Services
             };
         }
 
+        /// <summary>
+        /// Instantiates an enemy from its data definition.
+        /// </summary>
         private static Enemy CreateEnemyFromDef(EnemyDataService.EnemyDefinition def)
         {
             return new JsonEnemy(def.Name, Math.Max(1, def.EnemyLevel), def.Stats.MaxHP, def.Stats.Strength, def.Stats.Defense);
         }
 
+        /// <summary>
+        /// Helper enemy type used to hydrate stats directly from JSON.
+        /// </summary>
         private sealed class JsonEnemy : Enemy
         {
+            /// <summary>
+            /// Constructs an enemy with exact stats from data.
+            /// </summary>
             public JsonEnemy(string name, int level, int maxHp, int strength, int defense) : base(name, level)
             {
                 MaxHP = maxHp;

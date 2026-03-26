@@ -4,13 +4,22 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
+    /// <summary>
+    /// Loads item definitions from JSON and converts them into runtime items.
+    /// </summary>
     public static class ItemDataService
     {
+        /// <summary>
+        /// Root container for items.json.
+        /// </summary>
         public sealed class ItemDb
         {
             public ItemGroups Items { get; set; } = new();
         }
 
+        /// <summary>
+        /// Groups of item records by type.
+        /// </summary>
         public sealed class ItemGroups
         {
             public List<WeaponDef> Weapons { get; set; } = new();
@@ -19,6 +28,9 @@ namespace ConsoleRPG.Services
             public List<ConsumableDef> Consumables { get; set; } = new();
         }
 
+        /// <summary>
+        /// Serializable weapon definition.
+        /// </summary>
         public sealed class WeaponDef
         {
             public string Id { get; set; } = string.Empty;
@@ -31,11 +43,17 @@ namespace ConsoleRPG.Services
             public WeaponStats Stats { get; set; } = new();
         }
 
+        /// <summary>
+        /// Attack bonus payload for a weapon.
+        /// </summary>
         public sealed class WeaponStats
         {
             public int AttackBonus { get; set; }
         }
 
+        /// <summary>
+        /// Serializable armor definition.
+        /// </summary>
         public sealed class ArmorDef
         {
             public string Id { get; set; } = string.Empty;
@@ -48,11 +66,17 @@ namespace ConsoleRPG.Services
             public ArmorStats Stats { get; set; } = new();
         }
 
+        /// <summary>
+        /// Defense bonus payload for armor.
+        /// </summary>
         public sealed class ArmorStats
         {
             public int DefenseBonus { get; set; }
         }
 
+        /// <summary>
+        /// Serializable accessory definition.
+        /// </summary>
         public sealed class AccessoryDef
         {
             public string Id { get; set; } = string.Empty;
@@ -65,12 +89,18 @@ namespace ConsoleRPG.Services
             public AccessoryStats Stats { get; set; } = new();
         }
 
+        /// <summary>
+        /// Attack/defense bonuses granted by an accessory.
+        /// </summary>
         public sealed class AccessoryStats
         {
             public int AttackBonus { get; set; }
             public int DefenseBonus { get; set; }
         }
 
+        /// <summary>
+        /// Serializable consumable definition.
+        /// </summary>
         public sealed class ConsumableDef
         {
             public string Id { get; set; } = string.Empty;
@@ -83,12 +113,18 @@ namespace ConsoleRPG.Services
             public ConsumableStats Stats { get; set; } = new();
         }
 
+        /// <summary>
+        /// Healing/resource restoration payload for a consumable.
+        /// </summary>
         public sealed class ConsumableStats
         {
             public int RestoreHP { get; set; }
             public int RestoreMP { get; set; }
         }
 
+        /// <summary>
+        /// Reads items.json and returns the parsed item database.
+        /// </summary>
         public static ItemDb Load(string path = "Data/items.json")
         {
             var json = File.ReadAllText(path);
@@ -105,6 +141,9 @@ namespace ConsoleRPG.Services
             return db;
         }
 
+        /// <summary>
+        /// Materializes all items into concrete instances for shop stock.
+        /// </summary>
         public static List<IItem> LoadAllItems(string path = "Data/items.json")
         {
             var db = Load(path);
@@ -133,6 +172,9 @@ namespace ConsoleRPG.Services
             return items;
         }
 
+        /// <summary>
+        /// Returns a lookup from item id to instantiated item.
+        /// </summary>
         public static Dictionary<string, IItem> LoadItemsById(string path = "Data/items.json")
         {
             var db = Load(path);
@@ -161,16 +203,28 @@ namespace ConsoleRPG.Services
             return map;
         }
 
+        /// <summary>
+        /// Concrete weapon type built from JSON data.
+        /// </summary>
         private sealed class JsonWeapon : Weapon
         {
+            /// <summary>
+            /// Maps a JSON weapon definition to a runtime weapon.
+            /// </summary>
             public JsonWeapon(WeaponDef def)
                 : base(def.Name, def.Description, def.Value, def.Weight, def.Rarity, def.LevelRequirement, def.Stats.AttackBonus)
             {
             }
         }
 
+        /// <summary>
+        /// Concrete consumable type built from JSON data.
+        /// </summary>
         private sealed class JsonConsumable : Consumable
         {
+            /// <summary>
+            /// Maps a JSON consumable definition to a runtime consumable item.
+            /// </summary>
             public JsonConsumable(ConsumableDef def)
                 : base(
                     name: def.Name,
