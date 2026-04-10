@@ -2,22 +2,22 @@ using System.Text.Json;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Loads dungeon definitions and rewards from JSON.
-    /// </summary>
+
+    // Loads dungeon definitions and rewards from JSON.
+
     public static class DungeonDataService
     {
-        /// <summary>
-        /// Root container for dungeon.json.
-        /// </summary>
+
+        // Root container for dungeon.json.
+
         public sealed class DungeonDb
         {
             public Dictionary<string, List<DungeonDefinition>> Dungeons { get; set; } = new();
         }
 
-        /// <summary>
-        /// Serializable dungeon definition including waves, boss, and rewards.
-        /// </summary>
+
+        // Serializable dungeon definition including waves, boss, and rewards.
+
         public sealed class DungeonDefinition
         {
             public string Id { get; set; } = string.Empty;
@@ -32,18 +32,18 @@ namespace ConsoleRPG.Services
             public DungeonRewards Rewards { get; set; } = new();
         }
 
-        /// <summary>
-        /// Specifies how many of a given enemy id to spawn.
-        /// </summary>
+
+        // Specifies how many of a given enemy id to spawn.
+
         public sealed class EnemyCount
         {
             public string EnemyId { get; set; } = string.Empty;
             public int Count { get; set; }
         }
 
-        /// <summary>
-        /// Rewards granted after clearing a dungeon.
-        /// </summary>
+
+        // Rewards granted after clearing a dungeon.
+
         public sealed class DungeonRewards
         {
             public int XP { get; set; }
@@ -51,9 +51,9 @@ namespace ConsoleRPG.Services
             public List<string> ItemIds { get; set; } = new();
         }
 
-        /// <summary>
-        /// Reads dungeon.json and returns the parsed database.
-        /// </summary>
+
+        // Reads dungeon.json and returns the parsed database.
+
         public static DungeonDb Load(string path = "Data/dungeon.json")
         {
             var json = File.ReadAllText(path);

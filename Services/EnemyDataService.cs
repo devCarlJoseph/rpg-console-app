@@ -2,22 +2,22 @@ using System.Text.Json;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Loads enemy definitions from JSON into simple DTOs.
-    /// </summary>
+    
+    // Loads enemy definitions from JSON into simple DTOs.
+
     public static class EnemyDataService
     {
-        /// <summary>
-        /// Root container for enemies.json.
-        /// </summary>
+        
+        // Root container for enemies.json.
+    
         public sealed class EnemyDb
         {
             public EnemyGroups Enemies { get; set; } = new();
         }
 
-        /// <summary>
-        /// Buckets enemy definitions by tier.
-        /// </summary>
+        
+        // Buckets enemy definitions by tier.
+    
         public sealed class EnemyGroups
         {
             public List<EnemyDefinition> Normal { get; set; } = new();
@@ -25,9 +25,9 @@ namespace ConsoleRPG.Services
             public List<EnemyDefinition> Boss { get; set; } = new();
         }
 
-        /// <summary>
-        /// Serializable enemy definition record.
-        /// </summary>
+        
+        // Serializable enemy definition record.
+    
         public sealed class EnemyDefinition
         {
             public string Id { get; set; } = string.Empty;
@@ -38,9 +38,9 @@ namespace ConsoleRPG.Services
             public EnemyLoot ExpectedLoot { get; set; } = new();
         }
 
-        /// <summary>
-        /// Core stat payload for an enemy.
-        /// </summary>
+        
+        // Core stat payload for an enemy.
+    
         public sealed class EnemyStats
         {
             public int MaxHP { get; set; }
@@ -49,18 +49,18 @@ namespace ConsoleRPG.Services
             public int Defense { get; set; }
         }
 
-        /// <summary>
-        /// Expected XP and gold rewards for defeating an enemy.
-        /// </summary>
+        
+        // Expected XP and gold rewards for defeating an enemy.
+    
         public sealed class EnemyLoot
         {
             public int XP { get; set; }
             public int Gold { get; set; }
         }
 
-        /// <summary>
-        /// Reads enemies.json and returns the parsed database.
-        /// </summary>
+        
+        // Reads enemies.json and returns the parsed database.
+    
         public static EnemyDb Load(string path = "Data/enemies.json")
         {
             var json = File.ReadAllText(path);

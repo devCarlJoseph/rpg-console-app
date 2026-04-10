@@ -2,9 +2,8 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Coordinates quest assignment, acceptance, and progress updates.
-    /// </summary>
+
+    // Coordinates quest assignment, acceptance, and progress updates.
     public class QuestManager
     {
         private int _day = 1;
@@ -12,9 +11,9 @@ namespace ConsoleRPG.Services
         private readonly Dictionary<string, QuestDataService.QuestDefinition> _questById;
         private readonly Dictionary<string, string> _enemyNameById;
 
-        /// <summary>
-        /// Loads quest and enemy data into lookup tables.
-        /// </summary>
+
+        // Loads quest and enemy data into lookup tables.
+
         public QuestManager()
         {
             _questDb = QuestDataService.Load();
@@ -29,18 +28,17 @@ namespace ConsoleRPG.Services
                 .ToDictionary(g => g.Key, g => g.First().Name, StringComparer.OrdinalIgnoreCase);
         }
 
-        /// <summary>
-        /// Advances the in-game day and assigns a new daily quest.
-        /// </summary>
+
+        // Advances the in-game day and assigns a new daily quest.
         public void NewDay(Player player)
         {
             _day++;
             AssignDailyQuest(player);
         }
 
-        /// <summary>
-        /// Adds a daily kill quest if it is not already active.
-        /// </summary>
+
+        // Adds a daily kill quest if it is not already active.
+
         public void AssignDailyQuest(Player player)
         {
             // Minimal daily quest: kill 3 goblins.
@@ -62,15 +60,15 @@ namespace ConsoleRPG.Services
             SystemMessageService.System($"Daily Quest Assigned: {quest.Title}");
         }
 
-        /// <summary>
-        /// Returns quest definitions loaded from quests.json.
-        /// </summary>
+
+        // Returns quest definitions loaded from quests.json.
+
         public IReadOnlyList<QuestDataService.QuestDefinition> GetAllQuestDefinitions()
             => _questDb.Quests;
 
-        /// <summary>
-        /// Attempts to accept a quest by id, avoiding duplicates and missing definitions.
-        /// </summary>
+
+        // Attempts to accept a quest by id, avoiding duplicates and missing definitions.
+
         public bool TryAcceptQuest(Player player, string questId)
         {
             if (player.ActiveQuests.Any(q => q.Id.Equals(questId, StringComparison.OrdinalIgnoreCase)) ||
@@ -90,9 +88,9 @@ namespace ConsoleRPG.Services
             return true;
         }
 
-        /// <summary>
-        /// Accepts a batch of quests, used when entering dungeons.
-        /// </summary>
+
+        // Accepts a batch of quests, used when entering dungeons.
+
         public void AssignDungeonQuests(Player player, IEnumerable<string> questIds)
         {
             foreach (var id in questIds)
@@ -101,9 +99,9 @@ namespace ConsoleRPG.Services
             }
         }
 
-        /// <summary>
-        /// Updates kill quest progress when an enemy is defeated.
-        /// </summary>
+
+        // Updates kill quest progress when an enemy is defeated.
+
         public void NotifyEnemyDefeated(Player player, Enemy enemy)
         {
             foreach (var quest in player.ActiveQuests.OfType<KillQuest>())
@@ -119,9 +117,9 @@ namespace ConsoleRPG.Services
             }
         }
 
-        /// <summary>
-        /// Marks clear-dungeon quests as completed when the matching dungeon is cleared.
-        /// </summary>
+
+        // Marks clear-dungeon quests as completed when the matching dungeon is cleared.
+
         public void NotifyDungeonCleared(Player player, string dungeonId)
         {
             foreach (var quest in player.ActiveQuests.OfType<ClearDungeonQuest>())
@@ -137,9 +135,9 @@ namespace ConsoleRPG.Services
             }
         }
 
-        /// <summary>
-        /// Instantiates a concrete quest type from its data definition.
-        /// </summary>
+
+        // Instantiates a concrete quest type from its data definition.
+
         private Quest CreateQuestFromDefinition(QuestDataService.QuestDefinition def)
         {
             if (def.Type.Equals("ClearDungeon", StringComparison.OrdinalIgnoreCase))

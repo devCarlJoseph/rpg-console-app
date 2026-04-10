@@ -80,8 +80,7 @@ namespace ConsoleRPG.UI
                     case "3":
                         return StartMenuResult.Exit;
                     default:
-                        Console.WriteLine("Invalid choice. Press any key to try again...");
-                        Console.ReadKey(true);
+                        ConsoleUi.ErrorMessage("Invalid choice.");
                         ConsoleUi.SafeClear();
                         ShowTitle();
                         break;

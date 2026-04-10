@@ -1,8 +1,6 @@
 namespace ConsoleRPG.Interfaces
 {
-    /// <summary>
-    /// Contract for quests that track progress and grant rewards.
-    /// </summary>
+    // Contract for quests that track progress and grant rewards.
     public interface IQuest
     {
         string Id { get; }
@@ -14,13 +12,10 @@ namespace ConsoleRPG.Interfaces
         int RewardXP { get; }
         int RewardGold { get; }
 
-        /// <summary>
-        /// Evaluates current progress and marks completion if met.
-        /// </summary>
+        // Evaluates current progress and marks completion if met.
         void CheckProgress(Model.Player player);
-        /// <summary>
-        /// Grants rewards and flags completion.
-        /// </summary>
+
+        // Grants rewards and flags completion.
         void Complete(Model.Player player);
     }
 }

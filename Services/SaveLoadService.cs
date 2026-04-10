@@ -3,16 +3,13 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Serializes and deserializes player progress to JSON files.
-    /// </summary>
+    // Serializes and deserializes player progress to JSON files.
     public static class SaveLoadService
     {
         private const string DefaultSavePath = "Data/savegame.json";
 
-        /// <summary>
-        /// DTO used to persist player state.
-        /// </summary>
+
+        // DTO used to persist player state.
         private sealed class SaveData
         {
             public int Id { get; set; }
@@ -35,9 +32,8 @@ namespace ConsoleRPG.Services
             public List<string> ShadowNames { get; set; } = new();
         }
 
-        /// <summary>
-        /// Writes the player's current state to disk.
-        /// </summary>
+
+        // Writes the player's current state to disk.
         public static void Save(Player player, string? path = null)
         {
             path ??= DefaultSavePath;
@@ -66,9 +62,8 @@ namespace ConsoleRPG.Services
             File.WriteAllText(path, json);
         }
 
-        /// <summary>
-        /// Loads a player from disk if a save exists; otherwise returns null.
-        /// </summary>
+
+        // Loads a player from disk if a save exists; otherwise returns null.
         public static Player? Load(string? path = null)
         {
             path ??= DefaultSavePath;
@@ -124,27 +119,24 @@ namespace ConsoleRPG.Services
             return player;
         }
 
-        /// <summary>
-        /// Minimal consumable model used when recreating inventory from save data.
-        /// </summary>
+
+        // Minimal consumable model used when recreating inventory from save data.
         private sealed class SimpleConsumable : Interfaces.IItem
         {
             public string Name { get; }
             public int Value => 5;
             private readonly int _heal;
 
-            /// <summary>
-            /// Creates a simple heal item with a fixed heal amount.
-            /// </summary>
+
+            // Creates a simple heal item with a fixed heal amount.
             public SimpleConsumable(string name, int heal)
             {
                 Name = name;
                 _heal = heal;
             }
 
-            /// <summary>
-            /// Restores hit points to the player when used.
-            /// </summary>
+
+            // Restores hit points to the player when used.
             public void Use(Player player)
             {
                 player.Heal(_heal);

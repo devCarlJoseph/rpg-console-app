@@ -47,7 +47,7 @@ namespace ConsoleRPG.UI
 
             if (string.IsNullOrWhiteSpace(rankKey) || !db.Dungeons.TryGetValue(rankKey, out var list) || list.Count == 0)
             {
-                SystemMessageService.Hint("No dungeons found for that rank.");
+                ConsoleUi.ErrorMessage("No dungeons found for that rank.");
                 return null;
             }
 
@@ -73,7 +73,7 @@ namespace ConsoleRPG.UI
             }
             if (!int.TryParse(pick, out var dungeonIdx) || dungeonIdx < 1 || dungeonIdx > list.Count)
             {
-                SystemMessageService.Hint("Invalid selection.");
+                ConsoleUi.ErrorMessage("Invalid selection.");
                 return null;
             }
 

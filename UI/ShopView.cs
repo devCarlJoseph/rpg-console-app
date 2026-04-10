@@ -9,9 +9,9 @@ namespace ConsoleRPG.UI
     public static class ShopView
     {
         private const int WIndex = 3;
-        private const int WItem = 44;
+        private const int WItem = 32;
         private const int WPrice = 8;
-        private const int WInfo = 18;
+        private const int WInfo = 32;
 
         /// <summary>
         /// Main shop loop; lets players filter categories and buy items.
@@ -35,15 +35,21 @@ namespace ConsoleRPG.UI
                 if (catInput.Equals("b", StringComparison.OrdinalIgnoreCase))
                     return;
 
-                Func<Interfaces.IItem, bool> filter = catInput switch
+                Func<ConsoleRPG.Interfaces.IItem, bool>? filter = catInput switch
                 {
                     "1" => i => i is Weapon,
                     "2" => i => i is Armor,
                     "3" => i => i is Accessory,
                     "4" => i => i is Consumable,
                     "5" => _ => true,
-                    _ => _ => false
+                    _ => null
                 };
+
+                if (filter is null)
+                {
+                    ConsoleUi.ErrorMessage("Invalid category choice.");
+                    continue;
+                }
 
                 var visible = new List<(int stockIndex, Interfaces.IItem item)>();
 
@@ -54,88 +60,99 @@ namespace ConsoleRPG.UI
                         visible.Add((i, item));
                 }
 
-                ConsoleUi.SafeClear();
-                RenderItemsTableHeader();
-
-                if (visible.Count == 0)
+                while (true)
                 {
-                    RenderEmptyItemsRow();
+                    ConsoleUi.SafeClear();
+                    ConsoleUi.Hud(player, "Shop");
+                    RenderItemsTableHeader();
+
+                    if (visible.Count == 0)
+                    {
+                        RenderEmptyItemsRow();
+                        RenderItemsTableFooter();
+                        ConsoleUi.Hint("\nPress any key to go back...");
+                        Console.ReadKey(true);
+                        break;
+                    }
+
+                    for (int i = 0; i < visible.Count; i++)
+                    {
+                        var item = visible[i].item;
+
+                        string rarity = item is Item it ? it.Rarity : string.Empty;
+                        string stats = ConsoleUi.GetItemStats(item);
+                        string req = item is Item it2 ? $"Lv {it2.LevelRequirement}" : string.Empty;
+                        string info = string.IsNullOrWhiteSpace(stats) ? req : $"{stats}  {req}";
+
+                        string icon =
+                            item is Weapon ? "⚔" :
+                            item is Armor ? "🛡" :
+                            item is Accessory ? "💍" :
+                            item is Consumable ? "🧪" :
+                            "📦";
+
+                        RenderItemRow(
+                            idx: i + 1,
+                            icon: icon,
+                            name: item.Name,
+                            value: item.Value,
+                            rarity: rarity,
+                            info: info);
+                    }
+
                     RenderItemsTableFooter();
-                    ConsoleUi.Hint("\nPress any key to continue...");
-                    Console.ReadKey(true);
-                    continue;
-                }
 
-                for (int i = 0; i < visible.Count; i++)
-                {
-                    var item = visible[i].item;
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("Commands");
+                    Console.ResetColor();
+                    Console.WriteLine("  Buy <#>   - Purchase item");
+                    Console.WriteLine("  B         - Back");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("> ");
+                    Console.ResetColor();
 
-                    string rarity = item is Item it ? it.Rarity : string.Empty;
-                    string info = item is Item it2 ? $"Lv {it2.LevelRequirement}" : string.Empty;
+                    var input = Console.ReadLine()?.Trim();
 
-                    string icon =
-                        item is Weapon ? "⚔" :
-                        item is Armor ? "🛡" :
-                        item is Accessory ? "💍" :
-                        item is Consumable ? "🧪" :
-                        "📦";
-
-                    RenderItemRow(
-                        idx: i + 1,
-                        icon: icon,
-                        name: item.Name,
-                        value: item.Value,
-                        rarity: rarity,
-                        info: info);
-                }
-
-                RenderItemsTableFooter();
-
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Commands");
-                Console.ResetColor();
-                Console.WriteLine("  Buy <#>   - Purchase item");
-                Console.WriteLine("  B         - Back");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("> ");
-                Console.ResetColor();
-
-                var input = Console.ReadLine()?.Trim();
-
-                if (string.IsNullOrWhiteSpace(input))
-                    continue;
-
-                if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
-                    continue;
-
-                if (input.StartsWith("buy", StringComparison.OrdinalIgnoreCase))
-                {
-                    var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-                    if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
-                    {
-                        SystemMessageService.Hint("Usage: Buy <#>");
+                    if (string.IsNullOrWhiteSpace(input))
                         continue;
-                    }
 
-                    if (idx < 1 || idx > visible.Count)
+                    if (input.Equals("b", StringComparison.OrdinalIgnoreCase))
+                        break;
+
+                    if (input.StartsWith("buy", StringComparison.OrdinalIgnoreCase))
                     {
-                        SystemMessageService.Hint("Invalid item number.");
-                        continue;
+                        var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                        if (parts.Length < 2 || !int.TryParse(parts[1], out var idx))
+                        {
+                            ConsoleUi.ErrorMessage("Usage: Buy <#>");
+                            continue;
+                        }
+
+                        if (idx < 1 || idx > visible.Count)
+                        {
+                            ConsoleUi.ErrorMessage("Invalid item number.");
+                            continue;
+                        }
+
+                        var stockIndex = visible[idx - 1].stockIndex;
+                        var ok = shop.TryBuy(player, stockIndex);
+
+                        if (!ok)
+                        {
+                            ConsoleUi.ErrorMessage("Purchase failed (not enough gold or invalid item).");
+                            continue;
+                        }
+
+                        SystemMessageService.Success("Purchased!");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey(true);
                     }
-
-                    var stockIndex = visible[idx - 1].stockIndex;
-
-                    var ok = shop.TryBuy(player, stockIndex);
-
-                    if (!ok)
+                    else
                     {
-                        SystemMessageService.Warning("Purchase failed (invalid item or not enough gold).");
-                        continue;
+                        ConsoleUi.ErrorMessage("Invalid command.");
                     }
-
-                    SystemMessageService.Success("Purchased!");
                 }
             }
         }

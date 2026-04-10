@@ -4,22 +4,22 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Loads item definitions from JSON and converts them into runtime items.
-    /// </summary>
+
+    // Loads item definitions from JSON and converts them into runtime items.
+
     public static class ItemDataService
     {
-        /// <summary>
-        /// Root container for items.json.
-        /// </summary>
+
+        // Root container for items.json.
+
         public sealed class ItemDb
         {
             public ItemGroups Items { get; set; } = new();
         }
 
-        /// <summary>
-        /// Groups of item records by type.
-        /// </summary>
+
+        // Groups of item records by type.
+
         public sealed class ItemGroups
         {
             public List<WeaponDef> Weapons { get; set; } = new();
@@ -28,9 +28,9 @@ namespace ConsoleRPG.Services
             public List<ConsumableDef> Consumables { get; set; } = new();
         }
 
-        /// <summary>
-        /// Serializable weapon definition.
-        /// </summary>
+
+        // Serializable weapon definition.
+
         public sealed class WeaponDef
         {
             public string Id { get; set; } = string.Empty;
@@ -43,17 +43,17 @@ namespace ConsoleRPG.Services
             public WeaponStats Stats { get; set; } = new();
         }
 
-        /// <summary>
-        /// Attack bonus payload for a weapon.
-        /// </summary>
+
+        // Attack bonus payload for a weapon.
+
         public sealed class WeaponStats
         {
             public int AttackBonus { get; set; }
         }
 
-        /// <summary>
-        /// Serializable armor definition.
-        /// </summary>
+
+        // Serializable armor definition.
+
         public sealed class ArmorDef
         {
             public string Id { get; set; } = string.Empty;
@@ -66,17 +66,17 @@ namespace ConsoleRPG.Services
             public ArmorStats Stats { get; set; } = new();
         }
 
-        /// <summary>
-        /// Defense bonus payload for armor.
-        /// </summary>
+
+        // Defense bonus payload for armor.
+
         public sealed class ArmorStats
         {
             public int DefenseBonus { get; set; }
         }
 
-        /// <summary>
-        /// Serializable accessory definition.
-        /// </summary>
+
+        // Serializable accessory definition.
+
         public sealed class AccessoryDef
         {
             public string Id { get; set; } = string.Empty;
@@ -89,18 +89,18 @@ namespace ConsoleRPG.Services
             public AccessoryStats Stats { get; set; } = new();
         }
 
-        /// <summary>
-        /// Attack/defense bonuses granted by an accessory.
-        /// </summary>
+
+        // Attack/defense bonuses granted by an accessory.
+
         public sealed class AccessoryStats
         {
             public int AttackBonus { get; set; }
             public int DefenseBonus { get; set; }
         }
 
-        /// <summary>
-        /// Serializable consumable definition.
-        /// </summary>
+
+        // Serializable consumable definition.
+
         public sealed class ConsumableDef
         {
             public string Id { get; set; } = string.Empty;
@@ -113,18 +113,18 @@ namespace ConsoleRPG.Services
             public ConsumableStats Stats { get; set; } = new();
         }
 
-        /// <summary>
-        /// Healing/resource restoration payload for a consumable.
-        /// </summary>
+
+        // Healing/resource restoration payload for a consumable.
+
         public sealed class ConsumableStats
         {
             public int RestoreHP { get; set; }
             public int RestoreMP { get; set; }
         }
 
-        /// <summary>
-        /// Reads items.json and returns the parsed item database.
-        /// </summary>
+
+        // Reads items.json and returns the parsed item database.
+
         public static ItemDb Load(string path = "Data/items.json")
         {
             var json = File.ReadAllText(path);
@@ -141,9 +141,9 @@ namespace ConsoleRPG.Services
             return db;
         }
 
-        /// <summary>
-        /// Materializes all items into concrete instances for shop stock.
-        /// </summary>
+
+        // Materializes all items into concrete instances for shop stock.
+
         public static List<IItem> LoadAllItems(string path = "Data/items.json")
         {
             var db = Load(path);
@@ -172,9 +172,9 @@ namespace ConsoleRPG.Services
             return items;
         }
 
-        /// <summary>
-        /// Returns a lookup from item id to instantiated item.
-        /// </summary>
+
+        // Returns a lookup from item id to instantiated item.
+
         public static Dictionary<string, IItem> LoadItemsById(string path = "Data/items.json")
         {
             var db = Load(path);
@@ -203,28 +203,28 @@ namespace ConsoleRPG.Services
             return map;
         }
 
-        /// <summary>
-        /// Concrete weapon type built from JSON data.
-        /// </summary>
+
+        // Concrete weapon type built from JSON data.
+
         private sealed class JsonWeapon : Weapon
         {
-            /// <summary>
-            /// Maps a JSON weapon definition to a runtime weapon.
-            /// </summary>
+
+            // Maps a JSON weapon definition to a runtime weapon.
+
             public JsonWeapon(WeaponDef def)
                 : base(def.Name, def.Description, def.Value, def.Weight, def.Rarity, def.LevelRequirement, def.Stats.AttackBonus)
             {
             }
         }
 
-        /// <summary>
-        /// Concrete consumable type built from JSON data.
-        /// </summary>
+
+        // Concrete consumable type built from JSON data.
+
         private sealed class JsonConsumable : Consumable
         {
-            /// <summary>
-            /// Maps a JSON consumable definition to a runtime consumable item.
-            /// </summary>
+
+            // Maps a JSON consumable definition to a runtime consumable item.
+
             public JsonConsumable(ConsumableDef def)
                 : base(
                     name: def.Name,

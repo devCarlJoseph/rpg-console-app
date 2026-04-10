@@ -57,6 +57,10 @@ namespace ConsoleRPG.UI
                             SystemMessageService.Hint("Quest could not be accepted (already active/completed or invalid).");
                         }
                     }
+                    else
+                    {
+                        ConsoleUi.ErrorMessage("Usage: A <#> (e.g., A 1)");
+                    }
                 }
 
                 return;

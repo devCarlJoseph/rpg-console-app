@@ -3,21 +3,15 @@ using ConsoleRPG.UI;
 
 namespace ConsoleRPG
 {
-    /// <summary>
-    /// Entry point for the RPG.
+    // Entry point for the RPG.
     /// 
-    /// This class is intentionally kept small:
-    /// - It only shows the title screen and main menu.
-    /// - It delegates all real gameplay to <see cref="GameEngine" />.
-    /// 
-    /// If you are looking for the actual game loop and commands,
-    /// open <c>Core/GameEngine.cs</c>.
-    /// </summary>
+    // This class is intentionally kept small:
+    // - It only shows the title screen and main menu.
+    // - It delegates all real gameplay to <see cref="GameEngine" />.
+    //
     internal class Program
     {
-        /// <summary>
-        /// Displays the title screen, then loops through the start menu until the player exits the program.
-        /// </summary>
+        // Displays the title screen, then loops through the start menu until the player exits the program.
         private static void Main(string[] args)
         {
             StartMenu.ShowTitle();

@@ -1,8 +1,6 @@
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Represents a captured shadow ally with level and stats.
-    /// </summary>
+    // Represents a captured shadow ally with level and stats.
     public class Shadow
     {
         public string Name { get; }
@@ -10,9 +8,9 @@ namespace ConsoleRPG.Model
         public int Strength { get; }
         public int Defense { get; }
 
-        /// <summary>
-        /// Creates a shadow instance with immutable stats.
-        /// </summary>
+
+        // Creates a shadow instance with immutable stats.
+
         public Shadow(string name, int level, int strength, int defense)
         {
             Name = name;

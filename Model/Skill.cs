@@ -1,17 +1,16 @@
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Base abstract class for all skills.
-    /// </summary>
+
+    // Base abstract class for all skills.
     public abstract class Skill
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int RequiredLevel { get; private set; }
 
-        /// <summary>
-        /// Initializes a skill with common metadata.
-        /// </summary>
+    
+        // Initializes a skill with common metadata.
+
         protected Skill(string name, string description, int requiredLevel)
         {
             Name = name;
@@ -20,17 +19,16 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Active skills that the player manually uses in combat.
-    /// </summary>
+
+    // Active skills that the player manually uses in combat.
     public abstract class ActiveSkill : Skill
     {
         public int ManaCost { get; private set; }
         public int CooldownTurns { get; private set; }
 
-        /// <summary>
-        /// Initializes an active skill with cost and cooldown.
-        /// </summary>
+    
+        // Initializes an active skill with cost and cooldown.
+
         protected ActiveSkill(string name, string description, int requiredLevel, int manaCost, int cooldown)
         : base(name, description, requiredLevel)
         {
@@ -38,22 +36,21 @@ namespace ConsoleRPG.Model
             CooldownTurns = cooldown;
         }
 
-        /// <summary>
-        /// Executes the skill effect on the target.
-        /// </summary>
+    
+        // Executes the skill effect on the target.
+
         public abstract void Execute(Player caster, Enemy target);
     }
 
-    /// <summary>
-    /// Active skill that deals direct damage.
-    /// </summary>
+
+    // Active skill that deals direct damage.
     public class DamageSkill : ActiveSkill
     {
         public int BaseDamage { get; private set; }
 
-        /// <summary>
-        /// Creates a damage skill with base damage and mana cost.
-        /// </summary>
+    
+        // Creates a damage skill with base damage and mana cost.
+
         public DamageSkill(
             string name,
             string description,
@@ -66,9 +63,9 @@ namespace ConsoleRPG.Model
             BaseDamage = baseDamage;
         }
 
-        /// <summary>
-        /// Spends mana and applies intelligence-scaled damage to the target.
-        /// </summary>
+    
+        // Spends mana and applies intelligence-scaled damage to the target.
+
         public override void Execute(Player caster, Enemy target)
         {
             if (caster.MP < ManaCost)
@@ -91,25 +88,24 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Active skill that restores HP to the caster.
-    /// </summary>
+
+    // Active skill that restores HP to the caster.
     public class HealSkill : ActiveSkill
     {
         public int HealAmount { get; private set; }
 
-        /// <summary>
-        /// Creates a healing skill with a fixed heal amount.
-        /// </summary>
+    
+        // Creates a healing skill with a fixed heal amount.
+
         public HealSkill(string name, string description, int requiredLevel, int manaCost, int cooldown, int HealAmount)
         : base(name, description, requiredLevel, manaCost, cooldown)
         {
             this.HealAmount = HealAmount;
         }
 
-        /// <summary>
-        /// Spends mana and heals the caster.
-        /// </summary>
+    
+        // Spends mana and heals the caster.
+
         public override void Execute(Player caster, Enemy target)
         {
             if (caster.MP < ManaCost)
@@ -127,18 +123,17 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Shadow "Arise" skill: extracted shadows become usable skills in combat.
-    /// </summary>
+
+    // Shadow "Arise" skill: extracted shadows become usable skills in combat.
     public class ShadowStrikeSkill : ActiveSkill
     {
         public string ShadowName { get; }
         public int ShadowLevel { get; }
         public int ShadowStrength { get; }
 
-        /// <summary>
-        /// Creates a combat skill bound to a captured shadow's stats.
-        /// </summary>
+    
+        // Creates a combat skill bound to a captured shadow's stats.
+
         public ShadowStrikeSkill(Shadow shadow)
             : base(
                 name: $"Shadow: {shadow.Name}",
@@ -152,9 +147,9 @@ namespace ConsoleRPG.Model
             ShadowStrength = shadow.Strength;
         }
 
-        /// <summary>
-        /// Uses shadow power to deal damage scaled by shadow and caster stats.
-        /// </summary>
+    
+        // Uses shadow power to deal damage scaled by shadow and caster stats.
+
         public override void Execute(Player caster, Enemy target)
         {
             if (caster.MP < ManaCost)
@@ -170,17 +165,16 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Passive skills give permanent bonuses.
-    /// </summary>
+
+    // Passive skills give permanent bonuses.
     public class PassiveSkill : Skill
     {
         public int BonusStrength { get; private set; }
         public int BonusDefense { get; private set; }
 
-        /// <summary>
-        /// Creates a passive skill that boosts stats.
-        /// </summary>
+    
+        // Creates a passive skill that boosts stats.
+
         public PassiveSkill(
             string name,
             string description,
@@ -193,9 +187,9 @@ namespace ConsoleRPG.Model
             BonusDefense = bonusDefense;
         }
 
-        /// <summary>
-        /// Applies the passive bonuses to the player.
-        /// </summary>
+    
+        // Applies the passive bonuses to the player.
+
         public void Apply(Player player)
         {
             player.IncreaseStrength(BonusStrength);

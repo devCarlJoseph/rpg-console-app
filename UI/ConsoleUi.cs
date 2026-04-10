@@ -66,6 +66,48 @@ namespace ConsoleRPG.UI
         }
 
         /// <summary>
+        /// Displays an error message in the console using the error theme color.
+        /// </summary>
+        public static void ErrorMessage(string text)
+        {
+            Console.ForegroundColor = Theme.Error;
+            Console.WriteLine($"\n[ERROR] {text}");
+            Console.ResetColor();
+            Console.WriteLine("Press any key to retry...");
+            Console.ReadKey(true);
+        }
+
+        /// <summary>
+        /// Prompts the user for a number within a range (inclusive). 
+        /// Loops and shows an error if input is invalid.
+        /// </summary>
+        public static int PromptInt(string text, int min, int max)
+        {
+            while (true)
+            {
+                var input = Prompt(text);
+                if (int.TryParse(input, out var result) && result >= min && result <= max)
+                {
+                    return result;
+                }
+
+                ErrorMessage($"Invalid input. Please enter a number between {min} and {max}.");
+            }
+        }
+
+        /// <summary>
+        /// Returns a formatted string describing the item's primary stats.
+        /// </summary>
+        public static string GetItemStats(ConsoleRPG.Interfaces.IItem item)
+        {
+            if (item is ConsoleRPG.Model.Weapon w) return $"+{w.AttackBonus} ATK";
+            if (item is ConsoleRPG.Model.Armor a) return $"+{a.DefenseBonus} DEF";
+            if (item is ConsoleRPG.Model.Accessory acc) return $"+{acc.AttackBonus} ATK, +{acc.DefenseBonus} DEF";
+            if (item is ConsoleRPG.Model.Consumable c) return $"+{c.HealAmount} HP";
+            return string.Empty;
+        }
+
+        /// <summary>
         /// Writes a framed header block with title and separator.
         /// </summary>
         public static void BoxHeader(string title, int innerWidth)

@@ -2,9 +2,8 @@ using ConsoleRPG.Interfaces;
 
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Represents the player character with stats, inventory, skills, and quests.
-    /// </summary>
+
+    // Represents the player character with stats, inventory, skills, and quests.
     public class Player : IEntity
     {
         // --- Basic Attributes ---
@@ -22,8 +21,8 @@ namespace ConsoleRPG.Model
         public int MP { get; set; }
         public int Strength { get; private set; } = 10;
         public int Agility { get; private set; } = 10;
-        public int Intelligence { get; private set; } = 10; 
-        public int Defense { get; private set; } = 5; 
+        public int Intelligence { get; private set; } = 10;
+        public int Defense { get; private set; } = 5;
 
         // --- Collections & Equipment ---
         public Inventory Inventory { get; private set; } = new Inventory();
@@ -37,9 +36,9 @@ namespace ConsoleRPG.Model
         public List<Shadow> Shadows { get; private set; } = new List<Shadow>();
 
         // --- Constructor
-        /// <summary>
-        /// Creates a new player with default starting stats and currency.
-        /// </summary>
+
+        // Creates a new player with default starting stats and currency.
+
         public Player(string name)
         {
             Name = name;
@@ -49,9 +48,9 @@ namespace ConsoleRPG.Model
         }
 
         // --- Methods (Behaviors) ---
-        /// <summary>
-        /// Reduces HP after factoring in defense, never dropping below zero.
-        /// </summary>
+
+        // Reduces HP after factoring in defense, never dropping below zero.
+
         public void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -67,9 +66,9 @@ namespace ConsoleRPG.Model
             }
         }
 
-        /// <summary>
-        /// Heals the player by a specified amount, capped at MaxHP.
-        /// </summary>
+
+        // Heals the player by a specified amount, capped at MaxHP.
+
         public void Heal(int amount)
         {
             HP += amount;
@@ -79,9 +78,9 @@ namespace ConsoleRPG.Model
             }
         }
 
-        /// <summary>
-        /// Grants XP and triggers level-ups until excess XP is consumed.
-        /// </summary>
+
+        // Grants XP and triggers level-ups until excess XP is consumed.
+
         public void GainXP(int amount)
         {
             XP += amount;
@@ -94,9 +93,9 @@ namespace ConsoleRPG.Model
 
         public int XPToNextLevel => XPToLevelUp() - XP;
 
-        /// <summary>
-        /// Increases stats for a level gain and restores HP/MP.
-        /// </summary>
+
+        // Increases stats for a level gain and restores HP/MP.
+
         private void LevelUp()
         {
             Level++;
@@ -110,18 +109,18 @@ namespace ConsoleRPG.Model
             MP = MaxMP;
         }
 
-        /// <summary>
-        /// Calculates the XP threshold required to reach the next level.
-        /// </summary>
+
+        // Calculates the XP threshold required to reach the next level.
+
         private int XPToLevelUp()
         {
             // Example: XP required increases per level
             return 100 + (Level - 1) * 50;
         }
 
-        /// <summary>
-        /// Adds positive gold amounts to the player's wallet.
-        /// </summary>
+
+        // Adds positive gold amounts to the player's wallet.
+
         public void AddGold(int amount)
         {
             if (amount <= 0)
@@ -132,9 +131,9 @@ namespace ConsoleRPG.Model
             Gold += amount;
         }
 
-        /// <summary>
-        /// Attempts to spend gold; returns true if the transaction succeeds.
-        /// </summary>
+
+        // Attempts to spend gold; returns true if the transaction succeeds.
+
         public bool TrySpendGold(int amount)
         {
             if (amount <= 0)
@@ -151,9 +150,9 @@ namespace ConsoleRPG.Model
             return true;
         }
 
-        /// <summary>
-        /// Equips a weapon, updating strength by removing old bonuses and applying new ones.
-        /// </summary>
+
+        // Equips a weapon, updating strength by removing old bonuses and applying new ones.
+
         public void EquipWeapon(Weapon weapon)
         {
             if (EquippedWeapon != null)
@@ -165,9 +164,9 @@ namespace ConsoleRPG.Model
             Strength += weapon.AttackBonus;
         }
 
-        /// <summary>
-        /// Consumes MP when casting abilities; floors at zero.
-        /// </summary>
+
+        // Consumes MP when casting abilities; floors at zero.
+
         public void ConsumeMana(int amount)
         {
             MP -= amount;
@@ -177,9 +176,9 @@ namespace ConsoleRPG.Model
             }
         }
 
-        /// <summary>
-        /// Restores MP by the given amount, capped at MaxMP.
-        /// </summary>
+
+        // Restores MP by the given amount, capped at MaxMP.
+
         public void RestoreMana(int amount)
         {
             if (amount <= 0)
@@ -194,25 +193,25 @@ namespace ConsoleRPG.Model
             }
         }
 
-        /// <summary>
-        /// Permanently increases strength by the provided amount.
-        /// </summary>
+
+        // Permanently increases strength by the provided amount.
+
         public void IncreaseStrength(int amount)
         {
             Strength += amount;
         }
 
-        /// <summary>
-        /// Permanently increases defense by the provided amount.
-        /// </summary>
+
+        // Permanently increases defense by the provided amount.
+
         public void IncreaseDefense(int amount)
         {
             Defense += amount;
         }
 
-        /// <summary>
-        /// Performs a basic attack against an enemy, including weapon bonus.
-        /// </summary>
+
+        // Performs a basic attack against an enemy, including weapon bonus.
+
         public void Attack(Enemy target)
         {
             int damage = Strength;

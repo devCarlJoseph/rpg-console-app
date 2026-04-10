@@ -2,12 +2,8 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Central combat math entry point.
-    /// Uses <see cref="CombatResult" /> so the game loop can know
-    /// not only how much damage was dealt, but also whether the
-    /// attack hit, crit, was evaded, or blocked, and who the source was.
-    /// </summary>
+
+    // Central combat math entry point.
     public static class CombatService
     {
         private static readonly Random Rng = new Random();
@@ -16,10 +12,10 @@ namespace ConsoleRPG.Services
         private const double BaseCritChance = 0.10;
         private const double CritMultiplier = 1.5;
 
-        /// <summary>
-        /// Resolves a basic physical attack from the Player to an Enemy.
-        /// Includes hit chance, crit chance, defense reduction, and fills a CombatResult.
-        /// </summary>
+    
+        // Resolves a basic physical attack from the Player to an Enemy.
+        // Includes hit chance, crit chance, defense reduction, and fills a CombatResult.
+
         public static CombatResult CalculatePlayerPhysicalDamage(Player attacker, Enemy defender, int flatBonus = 0)
         {
             var result = new CombatResult
@@ -65,10 +61,10 @@ namespace ConsoleRPG.Services
             return result;
         }
 
-        /// <summary>
-        /// Resolves a basic physical attack from an Enemy to the Player.
-        /// Mirrors the same rules as the Player attack for consistency.
-        /// </summary>
+    
+        // Resolves a basic physical attack from an Enemy to the Player.
+        // Mirrors the same rules as the Player attack for consistency.
+
         public static CombatResult CalculateEnemyPhysicalDamage(Enemy attacker, Player defender, int flatBonus = 0)
         {
             var result = new CombatResult

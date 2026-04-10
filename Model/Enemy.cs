@@ -2,9 +2,7 @@ using ConsoleRPG.Interfaces;
 
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Base enemy type with common combat stats and behaviors.
-    /// </summary>
+    // Base enemy type with common combat stats and behaviors.
     public class Enemy : IEntity
     {
         // --- Basic Information ---
@@ -18,9 +16,7 @@ namespace ConsoleRPG.Model
         public int Defense { get; protected set; }
 
         // --- Constructor ---
-        /// <summary>
-        /// Initializes an enemy with level-scaled stats.
-        /// </summary>
+        // Initializes an enemy with level-scaled stats.
         public Enemy(string name, int level)
         {
             Name = name;
@@ -31,18 +27,13 @@ namespace ConsoleRPG.Model
             Defense = 5 + level;
         }
         // --- Methods ---
-
-        /// <summary>
-        /// Returns the base attack damage for this enemy.
-        /// </summary>
+        // Returns the base attack damage for this enemy.
         public virtual int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies incoming damage after defense reduction.
-        /// </summary>
+        // Applies incoming damage after defense reduction.
         public virtual void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -61,16 +52,15 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Stronger boss-type enemy with higher stats and special power.
-    /// </summary>
+
+    // Stronger boss-type enemy with higher stats and special power.
     public class OrcWarlord : Enemy
     {
         public int SpecialAttackPower { get; private set; }
 
-        /// <summary>
-        /// Boosts base stats to create an Orc Warlord.
-        /// </summary>
+
+        // Boosts base stats to create an Orc Warlord.
+        
         public OrcWarlord(string name, int level) : base(name, level)
         {
             MaxHP += 500;
@@ -80,17 +70,17 @@ namespace ConsoleRPG.Model
             SpecialAttackPower = 90;
         }
 
-        /// <summary>
-        /// Attacks with base strength plus special power.
-        /// </summary>
+
+        // Attacks with base strength plus special power.
+        
         public override int Attack()
         {
             return Strength + SpecialAttackPower;
         }
 
-        /// <summary>
-        /// Applies damage with slightly increased mitigation.
-        /// </summary>
+
+        // Applies damage with slightly increased mitigation.
+        
         public override void TakeDamage(int damage)
         {
             int reducedDamage = damage - (Defense + 5);
@@ -109,16 +99,16 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// High-tier boss with heavy health and power scaling.
-    /// </summary>
+
+    // High-tier boss with heavy health and power scaling.
+    
     public class Demonlord : Enemy
     {
         public int SpecialAttackPower { get; private set; }
 
-        /// <summary>
-        /// Boosts base stats to create a Demonlord.
-        /// </summary>
+
+        // Boosts base stats to create a Demonlord.
+        
         public Demonlord(string name, int level) : base(name, level)
         {
             MaxHP += 700;
@@ -128,17 +118,17 @@ namespace ConsoleRPG.Model
             SpecialAttackPower = 95;
         }
 
-        /// <summary>
-        /// Attacks with base strength plus special power.
-        /// </summary>
+
+        // Attacks with base strength plus special power.
+        
         public override int Attack()
         {
             return Strength + SpecialAttackPower;
         }
 
-        /// <summary>
-        /// Applies damage with added mitigation compared to the base enemy.
-        /// </summary>
+
+        // Applies damage with added mitigation compared to the base enemy.
+        
         public override void TakeDamage(int damage)
         {
             int reducedDamage = damage - (Defense + 5);
@@ -157,14 +147,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Low-level enemy with minimal stats.
-    /// </summary>
+
+    // Low-level enemy with minimal stats.
+    
     public class Slime : Enemy
     {
-        /// <summary>
-        /// Sets lightweight stats for the slime.
-        /// </summary>
+
+        // Sets lightweight stats for the slime.
+        
         public Slime(string name, int level) : base(name, level)
         {
             MaxHP = 20;
@@ -173,17 +163,17 @@ namespace ConsoleRPG.Model
             Defense = 2;
         }
 
-        /// <summary>
-        /// Uses base strength for its attack.
-        /// </summary>
+
+        // Uses base strength for its attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies incoming damage with slime-specific defense.
-        /// </summary>
+    
+        // Applies incoming damage with slime-specific defense.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -202,14 +192,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Standard early-game goblin foe.
-    /// </summary>
+
+    // Standard early-game goblin foe.
+    
     public class Goblin : Enemy
     {
-        /// <summary>
-        /// Sets baseline goblin stats.
-        /// </summary>
+    
+        // Sets baseline goblin stats.
+        
         public Goblin(string name, int level) : base(name, level)
         {
             MaxHP = 30;
@@ -218,17 +208,17 @@ namespace ConsoleRPG.Model
             Defense = 5;
         }
 
-        /// <summary>
-        /// Goblin basic attack.
-        /// </summary>
+    
+        // Goblin basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage with goblin defenses.
-        /// </summary>
+    
+        // Applies damage with goblin defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -247,14 +237,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Mid-tier skeletal enemy with balanced stats.
-    /// </summary>
+
+    // Mid-tier skeletal enemy with balanced stats.
+    
     public class Skeleton : Enemy
     {
-        /// <summary>
-        /// Sets skeleton-specific stats.
-        /// </summary>
+    
+        // Sets skeleton-specific stats.
+        
         public Skeleton(string name, int level) : base(name, level)
         {
             MaxHP = 40;
@@ -263,17 +253,17 @@ namespace ConsoleRPG.Model
             Defense = 10;
         }
 
-        /// <summary>
-        /// Skeleton basic attack.
-        /// </summary>
+    
+        // Skeleton basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage with skeleton defenses.
-        /// </summary>
+    
+        // Applies damage with skeleton defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -292,14 +282,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Fast wolf enemy with moderate strength.
-    /// </summary>
+
+    // Fast wolf enemy with moderate strength.
+    
     public class WildWolf : Enemy
     {
-        /// <summary>
-        /// Sets wolf stats.
-        /// </summary>
+    
+        // Sets wolf stats.
+        
         public WildWolf(string name, int level) : base(name, level)
         {
             MaxHP = 60;
@@ -308,17 +298,17 @@ namespace ConsoleRPG.Model
             Defense = 10;
         }
 
-        /// <summary>
-        /// Wolf basic attack.
-        /// </summary>
+    
+        // Wolf basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using wolf defenses.
-        /// </summary>
+    
+        // Applies damage using wolf defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -337,14 +327,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Agile bat enemy with low defenses.
-    /// </summary>
+
+    // Agile bat enemy with low defenses.
+    
     public class CaveBat : Enemy
     {
-        /// <summary>
-        /// Sets bat stats.
-        /// </summary>
+    
+        // Sets bat stats.
+        
         public CaveBat(string name, int level) : base(name, level)
         {
             MaxHP = 30;
@@ -353,17 +343,17 @@ namespace ConsoleRPG.Model
             Defense = 5;
         }
 
-        /// <summary>
-        /// Bat basic attack.
-        /// </summary>
+    
+        // Bat basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using bat defenses.
-        /// </summary>
+    
+        // Applies damage using bat defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -382,14 +372,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Slow zombie enemy with basic stats.
-    /// </summary>
+
+    // Slow zombie enemy with basic stats.
+    
     public class Zombie : Enemy
     {
-        /// <summary>
-        /// Sets zombie stats.
-        /// </summary>
+    
+        // Sets zombie stats.
+        
         public Zombie(string name, int level) : base(name, level)
         {
             MaxHP = 40;
@@ -398,17 +388,17 @@ namespace ConsoleRPG.Model
             Defense = 10;
         }
 
-        /// <summary>
-        /// Zombie basic attack.
-        /// </summary>
+    
+        // Zombie basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using zombie defenses.
-        /// </summary>
+    
+        // Applies damage using zombie defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -427,14 +417,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Elite goblin variant with tougher stats.
-    /// </summary>
+
+    // Elite goblin variant with tougher stats.
+    
     public class GoblinWarrior : Enemy
     {
-        /// <summary>
-        /// Sets elite goblin warrior stats.
-        /// </summary>
+    
+        // Sets elite goblin warrior stats.
+        
         public GoblinWarrior(string name, int level) : base(name, level)
         {
             MaxHP = 70;
@@ -443,17 +433,17 @@ namespace ConsoleRPG.Model
             Defense = 15;
         }
 
-        /// <summary>
-        /// Goblin warrior basic attack.
-        /// </summary>
+    
+        // Goblin warrior basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using warrior defenses.
-        /// </summary>
+    
+        // Applies damage using warrior defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -472,14 +462,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Magical goblin variant with balanced stats.
-    /// </summary>
+
+    // Magical goblin variant with balanced stats.
+    
     public class GoblinMage : Enemy
     {
-        /// <summary>
-        /// Sets goblin mage stats.
-        /// </summary>
+    
+        // Sets goblin mage stats.
+        
         public GoblinMage(string name, int level) : base(name, level)
         {
             MaxHP = 80;
@@ -488,17 +478,17 @@ namespace ConsoleRPG.Model
             Defense = 10;
         }
 
-        /// <summary>
-        /// Goblin mage basic attack.
-        /// </summary>
+    
+        // Goblin mage basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using mage defenses.
-        /// </summary>
+    
+        // Applies damage using mage defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -517,14 +507,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// High-level caster enemy.
-    /// </summary>
+
+    // High-level caster enemy.
+    
     public class DarkMage : Enemy
     {
-        /// <summary>
-        /// Sets dark mage stats.
-        /// </summary>
+    
+        // Sets dark mage stats.
+        
         public DarkMage(string name, int level) : base(name, level)
         {
             MaxHP = 100;
@@ -533,17 +523,17 @@ namespace ConsoleRPG.Model
             Defense = 15;
         }
 
-        /// <summary>
-        /// Dark mage basic attack.
-        /// </summary>
+    
+        // Dark mage basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using mage defenses.
-        /// </summary>
+    
+        // Applies damage using mage defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -562,14 +552,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Powerful dragon enemy archetype.
-    /// </summary>
+
+    // Powerful dragon enemy archetype.
+    
     public class Dragon : Enemy
     {
-        /// <summary>
-        /// Sets dragon stats.
-        /// </summary>
+    
+        // Sets dragon stats.
+        
         public Dragon(string name, int level) : base(name, level)
         {
             MaxHP = 100;
@@ -578,17 +568,17 @@ namespace ConsoleRPG.Model
             Defense = 15;
         }
 
-        /// <summary>
-        /// Dragon basic attack.
-        /// </summary>
+    
+        // Dragon basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using dragon defenses.
-        /// </summary>
+    
+        // Applies damage using dragon defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;
@@ -607,14 +597,14 @@ namespace ConsoleRPG.Model
         }
     }
 
-    /// <summary>
-    /// Late-game armored undead knight.
-    /// </summary>
+
+    // Late-game armored undead knight.
+    
     public class UndeadKnight : Enemy
     {
-        /// <summary>
-        /// Sets undead knight stats.
-        /// </summary>
+    
+        // Sets undead knight stats.
+        
         public UndeadKnight(string name, int level) : base(name, level)
         {
             MaxHP = 150;
@@ -623,17 +613,17 @@ namespace ConsoleRPG.Model
             Defense = 25;
         }
 
-        /// <summary>
-        /// Knight basic attack.
-        /// </summary>
+    
+        // Knight basic attack.
+        
         public override int Attack()
         {
             return Strength;
         }
 
-        /// <summary>
-        /// Applies damage using knight defenses.
-        /// </summary>
+    
+        // Applies damage using knight defenses.
+        
         public override void TakeDamage(int damage)
         {
             int damageTaken = damage - Defense;

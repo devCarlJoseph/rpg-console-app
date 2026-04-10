@@ -1,15 +1,12 @@
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Basic armor model used by Player; provides defense bonuses.
-    /// </summary>
+
+    // Basic armor model used by Player; provides defense bonuses.
     public class Armor : Equipment
     {
         public int DefenseBonus { get; private set; }
 
-        /// <summary>
-        /// Creates armor with a defense bonus.
-        /// </summary>
+        // Creates armor with a defense bonus.
         public Armor(
             string name,
             string description,
@@ -23,9 +20,8 @@ namespace ConsoleRPG.Model
             DefenseBonus = defenseBonus;
         }
 
-        /// <summary>
-        /// Applies the defense bonus when equipped.
-        /// </summary>
+
+        // Applies the defense bonus when equipped.
         public override void Equip(Player player)
         {
             // Minimal: apply defense bonus when equipped.
@@ -33,9 +29,8 @@ namespace ConsoleRPG.Model
             player.IncreaseDefense(DefenseBonus);
         }
 
-        /// <summary>
-        /// Uses the armor by equipping it.
-        /// </summary>
+
+        // Uses the armor by equipping it.
         public override void Use(Player player)
         {
             Equip(player);

@@ -2,31 +2,31 @@ using System.Text.Json;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Loads quest definitions from JSON and provides simple DTOs.
-    /// </summary>
+
+    // Loads quest definitions from JSON and provides simple DTOs.
+
     public static class QuestDataService
     {
-        /// <summary>
-        /// Types of quests supported by the data file.
-        /// </summary>
+
+        // Types of quests supported by the data file.
+
         public enum QuestType
         {
             Kill,
             ClearDungeon
         }
 
-        /// <summary>
-        /// Root container for quest data.
-        /// </summary>
+
+        // Root container for quest data.
+
         public sealed class QuestDb
         {
             public List<QuestDefinition> Quests { get; set; } = new();
         }
 
-        /// <summary>
-        /// Serializable quest definition used to instantiate runtime quests.
-        /// </summary>
+
+        // Serializable quest definition used to instantiate runtime quests.
+
         public sealed class QuestDefinition
         {
             public string Id { get; set; } = string.Empty;
@@ -47,9 +47,9 @@ namespace ConsoleRPG.Services
             public int RewardGold { get; set; }
         }
 
-        /// <summary>
-        /// Reads quests.json and returns the parsed quest database.
-        /// </summary>
+
+        // Reads quests.json and returns the parsed quest database.
+
         public static QuestDb Load(string path = "Data/quests.json")
         {
             var json = File.ReadAllText(path);

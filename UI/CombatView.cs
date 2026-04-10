@@ -170,7 +170,8 @@ namespace ConsoleRPG.UI
             for (int i = 0; i < player.Inventory.Items.Count; i++)
             {
                 var it = player.Inventory.Items[i];
-                var line = $"[{i + 1}] {it.Name}  ({it.Value}g)";
+                var stats = ConsoleUi.GetItemStats(it);
+                var line = string.IsNullOrWhiteSpace(stats) ? $"[{i + 1}] {it.Name}" : $"[{i + 1}] {it.Name}  ({stats})";
                 ConsoleUi.BoxText(InnerWidth, ConsoleUi.Truncate(line, InnerWidth));
             }
             ConsoleUi.BoxLineSep(InnerWidth);

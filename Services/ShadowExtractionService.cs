@@ -2,17 +2,14 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Handles RNG-based extraction of shadows from defeated enemies.
-    /// </summary>
+    // Handles RNG-based extraction of shadows from defeated enemies.
     public static class ShadowExtractionService
     {
         private static readonly Random Rng = new();
 
-        /// <summary>
-        /// Attempts a single extraction roll and returns a shadow if successful.
-        /// Does not mutate player state; caller must add the shadow/skill.
-        /// </summary>
+
+        // Attempts a single extraction roll and returns a shadow if successful.
+        // Does not mutate player state; caller must add the shadow/skill.
         public static bool TryExtract(Player player, Enemy defeatedEnemy, out Shadow? shadow)
         {
             shadow = null;

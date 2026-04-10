@@ -2,9 +2,9 @@ using ConsoleRPG.Interfaces;
 
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Base item with common fields such as name, value, rarity, and requirements.
-    /// </summary>
+    
+    // Base item with common fields such as name, value, rarity, and requirements.
+
     public abstract class Item : IItem
     {
         public string Name { get; private set; }
@@ -14,9 +14,9 @@ namespace ConsoleRPG.Model
         public string Rarity { get; private set; }
         public int LevelRequirement { get; private set; }
 
-        /// <summary>
-        /// Initializes shared item metadata.
-        /// </summary>
+        
+        // Initializes shared item metadata.
+    
         protected Item(string name, string description, int value, int weight, string rarity, int levelRequirement)
         {
             Name = name;
@@ -27,102 +27,101 @@ namespace ConsoleRPG.Model
             LevelRequirement = levelRequirement;
         }
 
-        /// <summary>
-        /// Applies the item's effect to the player.
-        /// </summary>
+        
+        // Applies the item's effect to the player.
+    
         public abstract void Use(Player player);
     }
 
-    /// <summary>
-    /// Base class for equippable items such as weapons, armor, accessories.
-    /// </summary>
+    
+    // Base class for equippable items such as weapons, armor, accessories.
+
     public abstract class Equipment : Item
     {
 
-        /// <summary>
-        /// Passes common equipment metadata to the base item.
-        /// </summary>
+        
+        // Passes common equipment metadata to the base item.
+    
         protected Equipment(string name, string description, int value, int weight, string rarity, int levelRequirement)
         : base(name, description, value, weight, rarity, levelRequirement) { }
-        /// <summary>
-        /// Equips the item on the player, applying relevant bonuses.
-        /// </summary>
+        
+        // Equips the item on the player, applying relevant bonuses.
         public abstract void Equip(Player player);
     }
 
-    /// <summary>
-    /// Offensive equipment that boosts player attack.
-    /// </summary>
+    
+    // Offensive equipment that boosts player attack.
+
     public class Weapon : Equipment
     {
         public int AttackBonus { get; private set; }
-        /// <summary>
-        /// Creates a weapon with the given stats and attack bonus.
-        /// </summary>
+        
+        // Creates a weapon with the given stats and attack bonus.
+    
         protected Weapon(string name, string description, int value, int weight, string rarity, int levelRequirement, int attackBonus)
         : base(name, description, value, weight, rarity, levelRequirement)
         {
             AttackBonus = attackBonus;
         }
-        /// <summary>
-        /// Equips the weapon by delegating to the player's equip logic.
-        /// </summary>
+        
+        // Equips the weapon by delegating to the player's equip logic.
+    
         public override void Equip(Player player)
         {
             player.EquipWeapon(this);
         }
 
-        /// <summary>
-        /// Uses the weapon, which simply equips it.
-        /// </summary>
+        
+        // Uses the weapon, which simply equips it.
+    
         public override void Use(Player player)
         {
             Equip(player);
         }
     }
 
-    /// <summary>
-    /// Single-use items that restore health or provide effects.
-    /// </summary>
+    
+    // Single-use items that restore health or provide effects.
+
     public class Consumable : Item
     {
         public int HealAmount { get; private set; }
-        /// <summary>
-        /// Creates a consumable with a heal value.
-        /// </summary>
+        
+        // Creates a consumable with a heal value.
+    
         protected Consumable(string name, string description, int value, int weight, string rarity, int levelRequirement, int healAmount)
         : base(name, description, value, weight, rarity, levelRequirement)
         {
             HealAmount = healAmount;
         }
 
-        /// <summary>
-        /// Heals the player when consumed.
-        /// </summary>
+        
+        // Heals the player when consumed.
+    
         public override void Use(Player player)
         {
             player.Heal(HealAmount);
         }
     }
 
-    /// <summary>
-    /// Crafting material placeholders; not directly usable yet.
-    /// </summary>
+    
+    // Crafting material placeholders; not directly usable yet.
+
     public class Material : Item
     {
         public int StackSize { get; private set; }
-        /// <summary>
-        /// Creates a material stack with capacity.
-        /// </summary>
+        
+        // Creates a material stack with capacity.
+    
         protected Material(string name, string description, int value, int weight, string rarity, int levelRequirement, int stackSize)
         : base(name, description, value, weight, rarity, levelRequirement)
         {
             StackSize = stackSize;
         }
 
-        /// <summary>
-        /// Materials currently have no direct use effect.
-        /// </summary>
+        
+        // Materials currently have no direct use effect.
+    
         public override void Use(Player player)
         {
             // Materials are not directly usable for now.

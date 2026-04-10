@@ -42,16 +42,16 @@ namespace ConsoleRPG.UI
             ConsoleUi.BoxText(InnerWidth, "Tip: type the number and press Enter", ConsoleUi.Theme.HintColor);
             ConsoleUi.BoxLineBottom(InnerWidth);
 
-            var choice = ConsoleUi.Prompt("> ")?.Trim();
+            var choice = ConsoleUi.PromptInt("> ", 1, 7);
             return choice switch
             {
-                "1" => MainMenuChoice.Status,
-                "2" => MainMenuChoice.Inventory,
-                "3" => MainMenuChoice.Shop,
-                "4" => MainMenuChoice.Quests,
-                "5" => MainMenuChoice.EnterDungeon,
-                "6" => MainMenuChoice.Save,
-                "7" => MainMenuChoice.Exit,
+                1 => MainMenuChoice.Status,
+                2 => MainMenuChoice.Inventory,
+                3 => MainMenuChoice.Shop,
+                4 => MainMenuChoice.Quests,
+                5 => MainMenuChoice.EnterDungeon,
+                6 => MainMenuChoice.Save,
+                7 => MainMenuChoice.Exit,
                 _ => MainMenuChoice.Invalid
             };
         }

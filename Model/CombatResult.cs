@@ -1,8 +1,6 @@
 namespace ConsoleRPG.Model
 {
-    /// <summary>
-    /// Encapsulates the outcome of a combat action (hit, crit, damage, source).
-    /// </summary>
+    // Encapsulates the outcome of a combat action (hit, crit, damage, source).
     public class CombatResult
     {
         public int DamageDealt { get; set; }

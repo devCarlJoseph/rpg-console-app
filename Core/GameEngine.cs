@@ -5,34 +5,22 @@ using ConsoleRPG.UI;
 
 namespace ConsoleRPG.Core
 {
-    /// <summary>
-    /// High-level game loop for the console RPG.
-    /// 
-    /// This first version focuses on:
-    /// - A simple command parser (type commands like "help", "stats", "hunt", "exit").
-    /// - A very small combat loop when you choose "hunt".
-    /// - Clear, guided console output so you always know what to type next.
-    /// 
-    /// As you implement more systems (quests, shadows, gates),
-    /// you can extend this class with new commands and menus.
-    /// </summary>
+    
     public class GameEngine
     {
         private readonly Player _player;
         private readonly ShopService _shop = new();
         private readonly QuestManager _quests = new();
 
-        /// <summary>
-        /// Initializes the engine with the active player state.
-        /// </summary>
+        
+        // Initializes the engine with the active player state.
         public GameEngine(Player player)
         {
             _player = player;
         }
 
-        /// <summary>
-        /// Main game loop that routes menu selections until exit.
-        /// </summary>
+
+        // Main game loop that routes menu selections until exit.
         public void Run()
         {
             ConsoleUi.SafeClear();
@@ -74,15 +62,13 @@ namespace ConsoleRPG.Core
                         return;
 
                     default:
-                        SystemMessageService.Hint("Invalid option.");
+                        ConsoleUi.ErrorMessage("Invalid option.");
                         break;
                 }
             }
         }
 
-        /// <summary>
-        /// Drives the dungeon selection, combat waves, and reward distribution.
-        /// </summary>
+        // Drives the dungeon selection, combat waves, and reward distribution.
         private void EnterDungeon()
         {
             var db = DungeonDataService.Load();
@@ -143,9 +129,7 @@ namespace ConsoleRPG.Core
             }
         }
 
-        /// <summary>
-        /// Runs a single encounter until someone retreats or is defeated.
-        /// </summary>
+        // Runs a single encounter until someone retreats or is defeated.
         private void RunCombat(Enemy enemy)
         {
             string? log = null;
@@ -278,9 +262,7 @@ namespace ConsoleRPG.Core
             }
         }
 
-        /// <summary>
-        /// Applies computed combat damage and returns a short description string.
-        /// </summary>
+        // Applies computed combat damage and returns a short description string.
         private static string ApplyDamageAndDescribe(CombatResult result, IEntity defender)
         {
             if (!result.IsHit)
@@ -298,9 +280,7 @@ namespace ConsoleRPG.Core
             return $"{result.Source} deals {result.DamageDealt} damage{critText}.";
         }
 
-        /// <summary>
-        /// Prompts the player to attempt a shadow extraction after victory.
-        /// </summary>
+        // Prompts the player to attempt a shadow extraction after victory.
         private void OfferExtraction(Enemy defeatedEnemy)
         {
             const int maxAttempts = 3;
@@ -320,9 +300,7 @@ namespace ConsoleRPG.Core
             }
         }
 
-        /// <summary>
-        /// Adds a new shadow to the player and grants its combat skill if missing.
-        /// </summary>
+        // Adds a new shadow to the player and grants its combat skill if missing.
         private void AddShadowToPlayer(Shadow shadow)
         {
             _player.Shadows.Add(shadow);

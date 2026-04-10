@@ -2,16 +2,15 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.Services
 {
-    /// <summary>
-    /// Builds procedurally generated gates/dungeons based on player level.
-    /// </summary>
+    
+    // Builds procedurally generated gates/dungeons based on player level.
     public static class GateGenerationService
     {
         private static readonly Random Rng = new();
 
-        /// <summary>
-        /// Difficulty tiers used to select enemies.
-        /// </summary>
+        
+        // Difficulty tiers used to select enemies.
+
         public enum GateRank
         {
             E,
@@ -22,9 +21,9 @@ namespace ConsoleRPG.Services
             S
         }
 
-        /// <summary>
-        /// Creates a new dungeon with waves and boss chosen for the given rank.
-        /// </summary>
+        
+        // Creates a new dungeon with waves and boss chosen for the given rank.
+
         public static Dungeon Generate(Player player, GateRank? forcedRank = null)
         {
             var db = EnemyDataService.Load();
@@ -40,9 +39,9 @@ namespace ConsoleRPG.Services
             return new Dungeon(name, recommended, waveEnemies, boss);
         }
 
-        /// <summary>
-        /// Picks enemy definitions for the wave list and boss slot based on rank.
-        /// </summary>
+        
+        // Picks enemy definitions for the wave list and boss slot based on rank.
+
         private static (List<EnemyDataService.EnemyDefinition> waves, EnemyDataService.EnemyDefinition boss) PickEnemiesForRank(
             EnemyDataService.EnemyDb db,
             GateRank rank)
@@ -79,9 +78,9 @@ namespace ConsoleRPG.Services
             return (waves, boss);
         }
 
-        /// <summary>
-        /// Rolls a gate rank weighted by player level.
-        /// </summary>
+        
+        // Rolls a gate rank weighted by player level.
+
         private static GateRank RollRank(int playerLevel)
         {
             // Lightweight scaling: as level rises, better odds at higher ranks.
@@ -104,23 +103,23 @@ namespace ConsoleRPG.Services
             return roll < 50 ? GateRank.B : (roll < 85 ? GateRank.A : GateRank.S);
         }
 
-        /// <summary>
-        /// Instantiates an enemy from its data definition.
-        /// </summary>
+        
+        // Instantiates an enemy from its data definition.
+
         private static Enemy CreateEnemyFromDef(EnemyDataService.EnemyDefinition def)
         {
             // Enemy has protected setters; use a small derived type to set values.
             return new JsonEnemy(def.Name, Math.Max(1, def.EnemyLevel), def.Stats.MaxHP, def.Stats.Strength, def.Stats.Defense);
         }
 
-        /// <summary>
-        /// Lightweight enemy that sets stats directly from JSON.
-        /// </summary>
+        
+        // Lightweight enemy that sets stats directly from JSON.
+
         private sealed class JsonEnemy : Enemy
         {
-            /// <summary>
-            /// Constructs an enemy with exact stats from data.
-            /// </summary>
+            
+            // Constructs an enemy with exact stats from data.
+    
             public JsonEnemy(string name, int level, int maxHp, int strength, int defense) : base(name, level)
             {
                 MaxHP = maxHp;
