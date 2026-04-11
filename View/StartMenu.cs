@@ -3,14 +3,12 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
+    
     /// Handles the title screen and initial start/load/exit choices before the main game loop.
-    /// </summary>
     public static class StartMenu
     {
-        /// <summary>
-        /// Options shown to the player on the start menu.
-        /// </summary>
+        
+        /// Options shown to the player on the start menu. 
         public enum StartMenuResult
         {
             StartNew,
@@ -18,9 +16,8 @@ namespace ConsoleRPG.View
             Exit
         }
 
-        /// <summary>
+        
         /// Renders the ASCII title art and resets console colors.
-        /// </summary>
         public static void ShowTitle()
         {
             ConsoleUi.SafeClear();
@@ -51,9 +48,8 @@ namespace ConsoleRPG.View
             Console.ResetColor();
         }
 
-        /// <summary>
+        
         /// Displays the start menu and loops until the player picks a valid option.
-        /// </summary>
         public static StartMenuResult ShowStartMenu()
         {
             while (true)
@@ -88,9 +84,8 @@ namespace ConsoleRPG.View
             }
         }
 
-        /// <summary>
+        
         /// Prompts for a hunter name and returns a new player with default starting stats.
-        /// </summary>
         public static Player CreateNewPlayer()
         {
             ConsoleUi.SafeClear();
@@ -107,9 +102,8 @@ namespace ConsoleRPG.View
             return new Player(name);
         }
 
-        /// <summary>
+        
         /// Loads a previously saved player from disk, or returns null if none exists.
-        /// </summary>
         public static Player? LoadPlayer()
         {
             return SaveLoadService.Load();

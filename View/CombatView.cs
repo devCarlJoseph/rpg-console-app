@@ -2,9 +2,7 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Handles combat-specific prompts and layouts during encounters.
-    /// </summary>
     public static class CombatView
     {
         private const int InnerWidth = 78;
@@ -26,9 +24,7 @@ namespace ConsoleRPG.View
             Back
         }
 
-        /// <summary>
         /// Renders the enemy panel and optional combat log line.
-        /// </summary>
         public static void RenderEncounter(Player player, Enemy enemy, string encounterTitle, string? logLine)
         {
             ConsoleUi.SafeClear();
@@ -48,9 +44,7 @@ namespace ConsoleRPG.View
             }
         }
 
-        /// <summary>
         /// Shows available combat actions and returns the selected choice.
-        /// </summary>
         public static CombatAction PromptAction(Player player)
         {
             Console.WriteLine();
@@ -75,9 +69,7 @@ namespace ConsoleRPG.View
             };
         }
 
-        /// <summary>
         /// Presents attack types (physical, magic, skill) and returns the selection.
-        /// </summary>
         public static AttackType PromptAttackType(Player player)
         {
             Console.WriteLine();
@@ -106,9 +98,7 @@ namespace ConsoleRPG.View
             };
         }
 
-        /// <summary>
         /// Lists usable active skills and returns the chosen one, or null to cancel.
-        /// </summary>
         public static ActiveSkill? PromptSkill(Player player)
         {
             var skills = player.ActiveSkills.OfType<ActiveSkill>()
@@ -151,9 +141,7 @@ namespace ConsoleRPG.View
             return skills[idx - 1];
         }
 
-        /// <summary>
         /// Displays inventory and returns the selected item index for use, or null to cancel.
-        /// </summary>
         public static int? PromptItemIndex(Player player)
         {
             Console.WriteLine();
@@ -193,9 +181,7 @@ namespace ConsoleRPG.View
             return idx - 1;
         }
 
-        /// <summary>
         /// Builds a progress bar string for HP/MP display inside combat frames.
-        /// </summary>
         private static string Bar(int current, int max, int width)
         {
             if (max <= 0)

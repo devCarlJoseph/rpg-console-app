@@ -2,16 +2,12 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Provides the gate/dungeon rank selection flow.
-    /// </summary>
     public static class DungeonSelectView
     {
         private const int InnerWidth = 56;
 
-        /// <summary>
         /// Lets the player choose a dungeon rank and specific dungeon, returning the chosen definition.
-        /// </summary>
         public static DungeonDataService.DungeonDefinition? ChooseDungeon(DungeonDataService.DungeonDb db)
         {
             ConsoleUi.SafeClear();

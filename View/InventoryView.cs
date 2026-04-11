@@ -3,9 +3,7 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Screen for viewing and consuming items in the player's inventory.
-    /// </summary>
     public static class InventoryView
     {
         private const int WIndex = 3;
@@ -13,9 +11,7 @@ namespace ConsoleRPG.View
         private const int WStats = 25;
         private const int WValue = 8;
 
-        /// <summary>
         /// Loops over inventory interactions until the player chooses to leave.
-        /// </summary>
         public static void Show(Player player)
         {
             while (true)

@@ -3,16 +3,13 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Small UI helpers for post-combat outcomes (victory, extraction, defeat).
-    /// </summary>
     public static class CombatOutcomeView
     {
         private const int InnerWidth = 64;
 
-        /// <summary>
+        
         /// Shows a victory screen with rewards, last combat log, and current HP/MP.
-        /// </summary>
         public static void ShowVictory(Player player, Enemy enemy, int xp, int gold, string? lastLog)
         {
             ConsoleUi.SafeClear();
@@ -31,9 +28,8 @@ namespace ConsoleRPG.View
             Console.ReadLine();
         }
 
-        /// <summary>
+        
         /// Shows a prompt asking whether to attempt shadow extraction.
-        /// </summary>
         public static bool PromptExtraction()
         {
             ConsoleUi.SafeClear();
@@ -50,9 +46,8 @@ namespace ConsoleRPG.View
                    string.Equals(input, "arise", StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>
+        
         /// Displays the result of an extraction attempt.
-        /// </summary>
         public static void ShowExtractionResult(bool success, int attempt, int maxAttempts, Shadow? shadow)
         {
             ConsoleUi.SafeClear();
@@ -77,9 +72,8 @@ namespace ConsoleRPG.View
             Console.ReadLine();
         }
 
-        /// <summary>
+        
         /// Shows a defeat screen when the player falls in battle.
-        /// </summary>
         public static void ShowDefeat(Player player, Enemy enemy)
         {
             ConsoleUi.SafeClear();

@@ -3,16 +3,12 @@ using ConsoleRPG.Services;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Lists available quests and lets the player accept them.
-    /// </summary>
     public static class QuestBoardView
     {
         private const int InnerWidth = 78;
 
-        /// <summary>
         /// Displays quest definitions with status indicators and handles accept input.
-        /// </summary>
         public static void Show(QuestManager quests, Player player)
         {
             ConsoleUi.SafeClear();

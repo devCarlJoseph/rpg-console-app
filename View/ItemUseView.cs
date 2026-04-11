@@ -3,16 +3,13 @@ using ConsoleRPG.Model;
 
 namespace ConsoleRPG.View
 {
-    /// <summary>
     /// Simple UI to confirm when an item has been used, showing current HP/MP.
-    /// </summary>
     public static class ItemUseView
     {
         private const int InnerWidth = 56;
 
-        /// <summary>
+        
         /// Renders an item-used confirmation screen.
-        /// </summary>
         public static void Show(string title, Player player, IItem item, string? note = null)
         {
             ConsoleUi.SafeClear();
