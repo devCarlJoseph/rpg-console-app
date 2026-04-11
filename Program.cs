@@ -1,5 +1,5 @@
 using ConsoleRPG.Core;
-using ConsoleRPG.UI;
+using ConsoleRPG.View;
 
 namespace ConsoleRPG
 {

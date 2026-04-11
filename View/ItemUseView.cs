@@ -1,7 +1,7 @@
 using ConsoleRPG.Interfaces;
 using ConsoleRPG.Model;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Simple UI to confirm when an item has been used, showing current HP/MP.

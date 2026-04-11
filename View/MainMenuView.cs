@@ -1,4 +1,4 @@
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Displays the top-level navigation menu for the game loop.

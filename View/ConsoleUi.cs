@@ -1,4 +1,4 @@
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Shared console helpers for consistent colors, headers, and framed text blocks.

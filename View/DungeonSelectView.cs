@@ -1,6 +1,6 @@
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Provides the gate/dungeon rank selection flow.

@@ -1,6 +1,6 @@
 using ConsoleRPG.Model;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Handles combat-specific prompts and layouts during encounters.

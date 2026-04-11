@@ -1,7 +1,7 @@
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Small UI helpers for post-combat outcomes (victory, extraction, defeat).

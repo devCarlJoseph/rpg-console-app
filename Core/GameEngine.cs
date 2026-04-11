@@ -1,7 +1,7 @@
 using ConsoleRPG.Interfaces;
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
-using ConsoleRPG.UI;
+using ConsoleRPG.View;
 
 namespace ConsoleRPG.Core
 {

@@ -1,7 +1,7 @@
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Screen for viewing and consuming items in the player's inventory.

@@ -1,7 +1,7 @@
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Handles the title screen and initial start/load/exit choices before the main game loop.

@@ -18,7 +18,6 @@ Small C# console RPG that uses simple menus, combat, quests, shops, and dungeons
 - Loading is available from the title screen (**Load Game**). If no save exists, the game tells you.
 
 ## Testing
-- There are no automated tests yet. To sanity-check changes:
   - Start a new game, buy an item, use it, and verify HP/MP change.
   - Enter a dungeon, defeat an enemy, and confirm XP/Gold and quest progress update.
   - Save, exit, restart, and load to verify persistence.

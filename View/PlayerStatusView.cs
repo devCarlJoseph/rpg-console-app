@@ -1,6 +1,6 @@
 using ConsoleRPG.Model;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Shows a snapshot of the player's stats, resources, and shadows.

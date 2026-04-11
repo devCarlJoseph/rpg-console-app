@@ -1,7 +1,7 @@
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Lists available quests and lets the player accept them.

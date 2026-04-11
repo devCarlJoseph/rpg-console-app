@@ -1,7 +1,7 @@
 using ConsoleRPG.Model;
 using ConsoleRPG.Services;
 
-namespace ConsoleRPG.UI
+namespace ConsoleRPG.View
 {
     /// <summary>
     /// Renders the shop screen, allowing filtering and purchasing items.
@@ -85,11 +85,11 @@ namespace ConsoleRPG.UI
                         string info = string.IsNullOrWhiteSpace(stats) ? req : $"{stats}  {req}";
 
                         string icon =
-                            item is Weapon ? "⚔" :
-                            item is Armor ? "🛡" :
-                            item is Accessory ? "💍" :
-                            item is Consumable ? "🧪" :
-                            "📦";
+                            item is Weapon ? "⚔ " :
+                            item is Armor ? "🛡 " :
+                            item is Accessory ? "💍 " :
+                            item is Consumable ? "🧪 " :
+                            "📦 ";
 
                         RenderItemRow(
                             idx: i + 1,
